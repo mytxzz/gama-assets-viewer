@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'MyLuaGame' target in the 'MyLuaGame' project
+// Prefix header for all source files of the 'AssetViewer' target in the 'AssetViewer' project
 //
 
 #ifdef __OBJC__

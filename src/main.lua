@@ -15,6 +15,7 @@ function __G__TRACKBACK__(msg)
     return msg
 end
 
+
 local function main()
     collectgarbage("collect")
     -- avoid memory leak
@@ -31,10 +32,17 @@ local function main()
         cclog("result is ")
 		--require('debugger')()
 
+    local colors = require 'ansicolors'
+    print(colors('%{red}hello'))
+    print(colors('%{redbg}hello%{reset}'))
+    print(colors('%{bright red underline}hello'))
+
+
     end
     require "hello2"
     cclog("kkk result is @#@##@#@#@bbb")
-    cclog("result is " .. myadd(1, 1))
+    cclog("kkk result is @#@##@#@#@bbb")
+    --cclog("[\[\033[37m\]dfsfs\[\033[0m\]] ewerreqrwrqw\n\[\033[1;36m\]\dfasfsa\defsdf\[\033[1;33m\]")
 
     ---------------
 

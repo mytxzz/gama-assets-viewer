@@ -23,7 +23,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if(!glview) {
-		glview = GLView::createWithRect("MyLuaGame", Rect(0,0,900,640));
+		glview = GLView::createWithRect("AssetViewer", Rect(0,0,900,640));
 		director->setOpenGLView(glview);
 	}
 
