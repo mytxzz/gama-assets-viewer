@@ -1,9 +1,9 @@
-[submodule "vendor/lua-gama"]
-	path = vendor/lua-gama
+[submodule "src/vendor/lua-gama"]
+	path = src/vendor/lua-gama
 	url = git@github.com:yi/lua-gama.git
-[submodule "vendor/moonlight"]
-	path = vendor/moonlight
+[submodule "src/vendor/moonlight"]
+	path = src/vendor/moonlight
 	url = git@github.com:GamaLabs/moonlight-on-cocos2dx.git
-[submodule "vendor/async.lua"]
-	path = vendor/async.lua
+[submodule "src/vendor/async.lua"]
+	path = src/vendor/async.lua
 	url = git@github.com:yi/async.lua.git

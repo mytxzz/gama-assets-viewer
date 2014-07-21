@@ -13,7 +13,6 @@
 
 `moon-watch moonsrc/ src/`
 
-
 ## 开发时测试方法
 
 运行 `./start.sh` 脚本直接启动 mac 版本，日志输出到 `./log/mac.log`， 然后启动 tail 来监听这个日志
