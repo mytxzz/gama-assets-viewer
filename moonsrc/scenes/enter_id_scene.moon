@@ -9,8 +9,14 @@ create = (self) ->
   -- add label
   label = cc.LabelTTF\create "Enter Gama Asset Id:", "Arial", 42
   label\setPosition(cc.p(display.cx, display.cy + 250))
-  label\setColor(cc.c3b(255, 255, 255))
+  label\setColor(display.COLOR_WHITE)
   scene\addChild label
+
+  bgImg = display.newScale9Sprite("EditBoxBg.png")
+  inputId = cc.EditBox\create(40, bgImg)
+  inputId\setSize(cc.size(400, 96))
+  inputId\setPosition(cc.p(display.cx, display.cy + 100))
+  scene\addChild inputId
 
   return scene
 
