@@ -14,6 +14,7 @@ main = ->
   fileUtils\addSearchResolutionsOrder "src"
   fileUtils\addSearchResolutionsOrder "res"
 
+  display.enterScene "scenes.enter_id_scene"
 
 
 status, msg = xpcall main, __G__TRACKBACK__
