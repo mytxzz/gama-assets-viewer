@@ -14,11 +14,36 @@ create = (self) ->
 
   --bgImg = display.newScale9Sprite("EditBoxBg.png")
 
-  inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"), display.newScale9Sprite("EditBoxBg.png"), display.newScale9Sprite("EditBoxBg.png"))
-  --inputId = cc.EditBox\create("Asset Id", "Arial", 42)
-  --inputId\setSize(cc.size(400, 96))
+  inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   scene\addChild inputId
+
+  --btnView = cc.MenuItemSprite\create(display.newSprite("btn_view_normal.png"), display.newSprite("btn_view_push.png"))
+  btnView = ccui.Button\create!
+  btnView\loadTextures "btn_view_normal.png", "btn_view_push.png", "btn_view_push.png"
+  btnView\setPosition(cc.p(display.cx, display.cy - 50))
+  scene\addChild btnView
+
+  console.info "[enter_id_scene::method] cc.HTTPRequest: #{cc.HTTPRequest}"
+  console.info "[enter_id_scene::method] cc.HttpRequest: #{cc.HttpRequest}"
+  console.info "[enter_id_scene::method] cc.HttpClient: #{cc.HttpClient}"
+
+
+
+
+
+  --btnView\addNodeEventListener cc.MENU_ITEM_CLICKED_EVENT, (tag)->
+    --id = inputId\getText!
+
+    --console.info "[enter_id_scene::click] id:#{id}"
+
+    --gama.animation.loadById id, (err, result)->
+      --if err
+        --printf "[enter_id_scene::btn::listener] err:#{err}"
+        --return
+
+      --app\enterScene("show_animation_scene", result)
+
 
   return scene
 
