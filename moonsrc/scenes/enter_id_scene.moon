@@ -13,10 +13,12 @@ create = (self) ->
   scene\addChild label
 
   --bgImg = display.newScale9Sprite("EditBoxBg.png")
-  --inputId = cc.EditBox\create(40, bgImg)
+
+  inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"), display.newScale9Sprite("EditBoxBg.png"), display.newScale9Sprite("EditBoxBg.png"))
+  --inputId = cc.EditBox\create("Asset Id", "Arial", 42)
   --inputId\setSize(cc.size(400, 96))
-  --inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  --scene\addChild inputId
+  inputId\setPosition(cc.p(display.cx, display.cy + 100))
+  scene\addChild inputId
 
   return scene
 
