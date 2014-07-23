@@ -7,3 +7,6 @@
 [submodule "src/vendor/async.lua"]
 	path = src/vendor/async.lua
 	url = git@github.com:yi/async.lua.git
+[submodule "src/vendor/underscore.lua"]
+	path = src/vendor/underscore.lua
+	url = git@github.com:mirven/underscore.lua.git
