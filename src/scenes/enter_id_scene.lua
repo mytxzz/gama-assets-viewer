@@ -12,10 +12,15 @@ create = function(self)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
   btnView:setPosition(cc.p(display.cx, display.cy - 50))
+  btnView:setTouchEnabled(true)
+  btnView:addTouchEventListener(function(widget, eventType)
+    if not (eventType == ccui.TouchEventType.ended) then
+      return 
+    end
+    local id = inputId:getText()
+    return console.info("[enter_id_scene::click] id:" .. tostring(id))
+  end)
   scene:addChild(btnView)
-  console.info("[enter_id_scene::method] cc.HTTPRequest: " .. tostring(cc.HTTPRequest))
-  console.info("[enter_id_scene::method] cc.HttpRequest: " .. tostring(cc.HttpRequest))
-  console.info("[enter_id_scene::method] cc.HttpClient: " .. tostring(cc.HttpClient))
   return scene
 end
 return {

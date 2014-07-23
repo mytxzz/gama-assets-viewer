@@ -9,3 +9,5 @@ frameworks/runtime-src/proj.ios_mac/AssetViewer.xcodeproj/xcuserdata/
 frameworks/cocos2d-x/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/
 frameworks/runtime-src/proj.ios_mac/AssetViewer.xcodeproj/project.xcworkspace/
 *.swo
+lua-tests
+gama/
