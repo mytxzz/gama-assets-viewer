@@ -1,3 +1,4 @@
+require("gama")
 local scene = nil
 local create
 create = function(self)
@@ -18,7 +19,9 @@ create = function(self)
       return 
     end
     local id = inputId:getText()
-    return console.info("[enter_id_scene::click] id:" .. tostring(id))
+    console.info("[enter_id_scene::click] id:" .. tostring(id))
+    local assetType = gama.getTypeById(id)
+    return console.info("[enter_id_scene] assetType:" .. tostring(assetType))
   end)
   scene:addChild(btnView)
   return scene

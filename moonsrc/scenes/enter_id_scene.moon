@@ -1,5 +1,7 @@
 -- 输入素材ID 的界面
 
+require "gama"
+
 scene = nil
 
 create = (self) ->
@@ -18,7 +20,6 @@ create = (self) ->
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   scene\addChild inputId
 
-  --btnView = cc.MenuItemSprite\create(display.newSprite("btn_view_normal.png"), display.newSprite("btn_view_push.png"))
   btnView = ccui.Button\create!
   btnView\loadTextures "btn_view_normal.png", "btn_view_push.png", "btn_view_push.png"
   btnView\setPosition(cc.p(display.cx, display.cy - 50))
@@ -28,10 +29,13 @@ create = (self) ->
     id = inputId\getText!
     console.info "[enter_id_scene::click] id:#{id}"
 
+    assetType = gama.getTypeById id
+    console.info "[enter_id_scene] assetType:#{assetType}"
+
+
   scene\addChild btnView
 
   return scene
-
 
 return {
   create: create

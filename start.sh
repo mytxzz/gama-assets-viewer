@@ -32,6 +32,9 @@ else
   rm -rf "$MAC_APP_PATH/Contents/Resources/src"
   ln -s ../../../../../src "$MAC_APP_PATH/Contents/Resources/src"
 
+  rm -rf "$MAC_APP_PATH/Contents/Resources/gama"
+  ln -s ../../../../../gama "$MAC_APP_PATH/Contents/Resources/gama"
+
   "$MAC_APP_PATH/Contents/MacOS/AssetViewer Mac" > ./log/mac.log 2>&1 &
   $TAIL -f ./log/mac.log
 

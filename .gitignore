@@ -11,3 +11,4 @@ frameworks/runtime-src/proj.ios_mac/AssetViewer.xcodeproj/project.xcworkspace/
 *.swo
 lua-tests
 gama/
+quick-x
