@@ -1,1 +1,1 @@
-vendor/lua-gama/lib/init.lua
+vendor/lua-gama/lib/gama.lua

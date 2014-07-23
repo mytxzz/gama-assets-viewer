@@ -12,3 +12,5 @@ frameworks/runtime-src/proj.ios_mac/AssetViewer.xcodeproj/project.xcworkspace/
 lua-tests
 gama/
 quick-x
+.DS_Store
+lua-bindings

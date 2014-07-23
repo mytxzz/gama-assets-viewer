@@ -35,6 +35,9 @@ else
   rm -rf "$MAC_APP_PATH/Contents/Resources/gama"
   ln -s ../../../../../gama "$MAC_APP_PATH/Contents/Resources/gama"
 
+  echo "" > "$MAC_APP_PATH/Contents/Resources/Deprecated.lua"
+  echo "" > "$MAC_APP_PATH/Contents/Resources/DeprecatedClass.lua"
+
   "$MAC_APP_PATH/Contents/MacOS/AssetViewer Mac" > ./log/mac.log 2>&1 &
   $TAIL -f ./log/mac.log
 
