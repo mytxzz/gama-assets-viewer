@@ -32,6 +32,19 @@ create = (self) ->
     assetType = gama.getTypeById id
     console.info "[enter_id_scene] assetType:#{assetType}"
 
+    unless assetType == "animations"
+      console.error "ERROR [enter_id_scene::onTap] invalid animation json asset: id:#{id}"
+      return
+
+    gama.animation.getById id, (err, animation)->
+      if err
+        console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}"
+        return
+      else
+        console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
+
+      return
+
 
   scene\addChild btnView
 

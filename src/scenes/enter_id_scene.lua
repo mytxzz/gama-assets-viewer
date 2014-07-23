@@ -21,7 +21,19 @@ create = function(self)
     local id = inputId:getText()
     console.info("[enter_id_scene::click] id:" .. tostring(id))
     local assetType = gama.getTypeById(id)
-    return console.info("[enter_id_scene] assetType:" .. tostring(assetType))
+    console.info("[enter_id_scene] assetType:" .. tostring(assetType))
+    if not (assetType == "animations") then
+      console.error("ERROR [enter_id_scene::onTap] invalid animation json asset: id:" .. tostring(id))
+      return 
+    end
+    return gama.animation.getById(id, function(err, animation)
+      if err then
+        console.error("ERROR [enter_id_scene::getAnimation] fail to get animation:" .. tostring(id) .. ". error:" .. tostring(err))
+        return 
+      else
+        console.info("[enter_id_scene::getAnimation] got animation for id:" .. tostring(id))
+      end
+    end)
   end)
   scene:addChild(btnView)
   return scene
