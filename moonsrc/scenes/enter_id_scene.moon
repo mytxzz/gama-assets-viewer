@@ -18,7 +18,7 @@ create = ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  inputId\setText "AX2uvFt"
+  inputId\setText "A19Cpg0"
   scene\addChild inputId
 
   btnView = ccui.Button\create!
