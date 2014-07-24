@@ -4,7 +4,7 @@ require "gama"
 
 scene = nil
 
-create = (self) ->
+create = ->
 
   scene = cc.Scene\create()
 
@@ -18,7 +18,7 @@ create = (self) ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  inputId\setText "AIbN9CI"
+  inputId\setText "CqXn7x8"
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -37,12 +37,13 @@ create = (self) ->
       console.error "ERROR [enter_id_scene::onTap] invalid animation json asset: id:#{id}"
       return
 
-    gama.animation.getById id, (err, animation)->
+    gama.animation.getById id, (err, gamaAnimation)->
       if err
         console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}"
         return
       else
         console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
+        display.enterScene "scenes.show_animation_scene", {gamaAnimation}
 
       return
 

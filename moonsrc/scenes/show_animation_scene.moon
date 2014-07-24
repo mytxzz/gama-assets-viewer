@@ -3,23 +3,22 @@ require "gama"
 
 scene = nil
 
-create = (self, animation, infoObj, textures) ->
+create = (gamaAnimation) ->
+
+  print "[show_animation_scene::create] gamaAnimation:#{gamaAnimation}"
+
 
   scene = cc.Scene\create()
 
-  assert animation, "missing animation userdata to play on."
-  assert infoObj, "missing animation information."
-  assert textures and #textures > 0, "missing textures"
+  assert gamaAnimation, "missing animation userdata to play on."
 
-  sprite = cc.Sprite\createWithTexture textures[1]
-
-  transition.playAnimationForever(sprite, animation, delay)
-
+  sprite = cc.Sprite\create!
+  --sprite = gamaAnimation\createSprite!
   sprite\setPosition(display.cx, display.cy + 250)
-  sprite\addTo self
+  gamaAnimation\playOnSprite sprite
 
-return
-
+  scene\addChild sprite
+  return scene
 
 
 return {

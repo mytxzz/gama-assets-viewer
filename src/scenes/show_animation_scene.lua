@@ -1,17 +1,16 @@
 require("gama")
 local scene = nil
 local create
-create = function(self, animation, infoObj, textures)
+create = function(gamaAnimation)
+  print("[show_animation_scene::create] gamaAnimation:" .. tostring(gamaAnimation))
   scene = cc.Scene:create()
-  assert(animation, "missing animation userdata to play on.")
-  assert(infoObj, "missing animation information.")
-  assert(textures and #textures > 0, "missing textures")
-  local sprite = cc.Sprite:createWithTexture(textures[1])
-  transition.playAnimationForever(sprite, animation, delay)
+  assert(gamaAnimation, "missing animation userdata to play on.")
+  local sprite = cc.Sprite:create()
   sprite:setPosition(display.cx, display.cy + 250)
-  return sprite:addTo(self)
+  gamaAnimation:playOnSprite(sprite)
+  scene:addChild(sprite)
+  return scene
 end
-return 
 return {
   create = create
 }
