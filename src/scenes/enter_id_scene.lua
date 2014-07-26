@@ -9,7 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("E4OsP1W")
+  inputId:setText("8Lowbeq")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
@@ -23,21 +23,28 @@ create = function()
     console.info("[enter_id_scene::click] id:" .. tostring(id))
     local assetType = gama.getTypeById(id)
     console.info("[enter_id_scene] assetType:" .. tostring(assetType))
-    if not (assetType == "animations") then
-      console.error("ERROR [enter_id_scene::onTap] invalid animation json asset: id:" .. tostring(id) .. ", assetType:" .. tostring(assetType))
-      return 
-    end
-    return gama.animation.getById(id, function(err, gamaAnimation)
-      if err then
-        console.error("ERROR [enter_id_scene::getAnimation] fail to get animation:" .. tostring(id) .. ". error:" .. tostring(err))
-        return 
-      else
+    local _exp_0 = assetType
+    if "animations" == _exp_0 then
+      gama.animation.getById(id, function(err, gamaAnimation)
+        if err then
+          return console.error("ERROR [enter_id_scene::getAnimation] fail to get animation:" .. tostring(id) .. ". error:" .. tostring(err))
+        end
         console.info("[enter_id_scene::getAnimation] got animation for id:" .. tostring(id))
         display.enterScene("scenes.show_animation_scene", {
           gamaAnimation
         })
-      end
-    end)
+      end)
+      return 
+    elseif "figures" == _exp_0 then
+      gama.figure.getById(id, function(err, gamaFigure)
+        if err then
+          return console.error("ERROR [enter_id_scene::getFigure] fail to get figure:" .. tostring(id) .. ". error:" .. tostring(err))
+        end
+      end)
+      return 
+    else
+      return console.error("ERROR [enter_id_scene::onTap] invalid csx json asset: id:" .. tostring(id) .. ", assetType:" .. tostring(assetType))
+    end
   end)
   scene:addChild(btnView)
   return scene

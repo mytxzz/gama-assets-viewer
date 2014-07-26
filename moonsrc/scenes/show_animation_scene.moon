@@ -11,7 +11,6 @@ create = (gamaAnimation) ->
 
   assert gamaAnimation, "missing animation userdata to play on."
 
-
   xpos1 = display.width / 4
   xpos2 = display.width * 3 / 4
   ypos = display.cy

@@ -18,8 +18,8 @@ create = ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  inputId\setText "E4OsP1W" -- animation
-  --inputId\setText "8QkJObR" -- figure
+  --inputId\setText "E4OsP1W" -- animation
+  inputId\setText "8Lowbeq" -- figure
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -34,20 +34,26 @@ create = ->
     assetType = gama.getTypeById id
     console.info "[enter_id_scene] assetType:#{assetType}"
 
-    unless assetType == "animations"
-      console.error "ERROR [enter_id_scene::onTap] invalid animation json asset: id:#{id}, assetType:#{assetType}"
-      return
+    switch assetType
 
-    gama.animation.getById id, (err, gamaAnimation)->
-      if err
-        console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}"
+      when "animations"
+
+        gama.animation.getById id, (err, gamaAnimation)->
+          return console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}" if err
+          console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
+          display.enterScene "scenes.show_animation_scene", {gamaAnimation}
+          return
         return
+
+      when "figures"
+
+        gama.figure.getById id, (err, gamaFigure)->
+          return console.error "ERROR [enter_id_scene::getFigure] fail to get figure:#{id}. error:#{err}" if err
+          return
+        return
+
       else
-        console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
-        display.enterScene "scenes.show_animation_scene", {gamaAnimation}
-
-      return
-
+        console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{assetType}"
 
   scene\addChild btnView
 
