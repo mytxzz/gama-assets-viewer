@@ -18,7 +18,7 @@ create = ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  inputId\setText "8Yqf4Aj" -- animation
+  inputId\setText "E4OsP1W" -- animation
   --inputId\setText "8QkJObR" -- figure
   scene\addChild inputId
 
