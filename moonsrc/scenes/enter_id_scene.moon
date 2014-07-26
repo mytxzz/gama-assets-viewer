@@ -49,6 +49,8 @@ create = ->
 
         gama.figure.getById id, (err, gamaFigure)->
           return console.error "ERROR [enter_id_scene::getFigure] fail to get figure:#{id}. error:#{err}" if err
+          console.info "[enter_id_scene::getFigure] got figure for id:#{id}"
+          display.enterScene "scenes.show_figure_scene", {gamaFigure}
           return
         return
 

@@ -40,6 +40,10 @@ create = function()
         if err then
           return console.error("ERROR [enter_id_scene::getFigure] fail to get figure:" .. tostring(id) .. ". error:" .. tostring(err))
         end
+        console.info("[enter_id_scene::getFigure] got figure for id:" .. tostring(id))
+        display.enterScene("scenes.show_figure_scene", {
+          gamaFigure
+        })
       end)
       return 
     else
