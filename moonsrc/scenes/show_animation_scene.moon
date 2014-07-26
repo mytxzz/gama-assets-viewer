@@ -22,7 +22,7 @@ create = (gamaAnimation) ->
 
   scene\addChild sprite
 
-  borderColor = cc.c4f(1,0,0,1)
+  borderColor = cc.c4f(1,0,0,.5)
 
   line = cc.DrawNode\create!
   line\drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
