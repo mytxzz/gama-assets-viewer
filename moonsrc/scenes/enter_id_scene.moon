@@ -18,7 +18,8 @@ create = ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  inputId\setText "A19Cpg0"
+  inputId\setText "8Yqf4Aj" -- animation
+  --inputId\setText "8QkJObR" -- figure
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -34,7 +35,7 @@ create = ->
     console.info "[enter_id_scene] assetType:#{assetType}"
 
     unless assetType == "animations"
-      console.error "ERROR [enter_id_scene::onTap] invalid animation json asset: id:#{id}"
+      console.error "ERROR [enter_id_scene::onTap] invalid animation json asset: id:#{id}, assetType:#{assetType}"
       return
 
     gama.animation.getById id, (err, gamaAnimation)->

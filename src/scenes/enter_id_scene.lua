@@ -9,7 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("A19Cpg0")
+  inputId:setText("8Yqf4Aj")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
@@ -24,7 +24,7 @@ create = function()
     local assetType = gama.getTypeById(id)
     console.info("[enter_id_scene] assetType:" .. tostring(assetType))
     if not (assetType == "animations") then
-      console.error("ERROR [enter_id_scene::onTap] invalid animation json asset: id:" .. tostring(id))
+      console.error("ERROR [enter_id_scene::onTap] invalid animation json asset: id:" .. tostring(id) .. ", assetType:" .. tostring(assetType))
       return 
     end
     return gama.animation.getById(id, function(err, gamaAnimation)
