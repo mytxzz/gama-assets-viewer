@@ -15,3 +15,7 @@ quick-x
 .DS_Store
 lua-bindings
 tags
+frameworks/cocos2d-x/cocos/platform/android/java
+frameworks/runtime-src/proj.android/
+runtime/android/
+res/assets/

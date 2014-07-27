@@ -1,7 +1,10 @@
 require "Cocos2d"
 require "Cocos2dConstants"
 
-cc.FileUtils\getInstance!\addSearchPath "src/"
+fileUtils = cc.FileUtils\getInstance!
+fileUtils\addSearchPath "src/"
+fileUtils\addSearchPath "res/gama"
+
 require "moonlight"
 
 main = ->
@@ -10,8 +13,8 @@ main = ->
   collectgarbage "setpause", 100
   collectgarbage "setstepmul", 5000
 
-  fileUtils = cc.FileUtils\getInstance!
   fileUtils\addSearchResolutionsOrder "src"
+  fileUtils\addSearchResolutionsOrder "res/gama"
   fileUtils\addSearchResolutionsOrder "res"
 
   display.enterScene "scenes.enter_id_scene"

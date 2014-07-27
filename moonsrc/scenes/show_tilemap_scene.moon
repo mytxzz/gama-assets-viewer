@@ -23,7 +23,7 @@ create = (gamaTilemap) ->
   layer = view_helper.createTouchMoveLayer (touches, event )->
 
     diff = touches[1]\getDelta!
-    accumenDeltaX += diff.x
+    --accumenDeltaX += diff.x
 
     return
 
@@ -37,7 +37,7 @@ create = (gamaTilemap) ->
     --accumenDeltaX = 0
     --return
 
-  gamaTilemap\drawOnSprite(sprite, 1)
+  gamaTilemap\bindToSprite sprite
 
   layer\addChild sprite
   scene\addChild layer

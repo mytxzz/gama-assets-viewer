@@ -1,14 +1,16 @@
 require("Cocos2d")
 require("Cocos2dConstants")
-cc.FileUtils:getInstance():addSearchPath("src/")
+local fileUtils = cc.FileUtils:getInstance()
+fileUtils:addSearchPath("src/")
+fileUtils:addSearchPath("res/gama")
 require("moonlight")
 local main
 main = function()
   collectgarbage("collect")
   collectgarbage("setpause", 100)
   collectgarbage("setstepmul", 5000)
-  local fileUtils = cc.FileUtils:getInstance()
   fileUtils:addSearchResolutionsOrder("src")
+  fileUtils:addSearchResolutionsOrder("res/gama")
   fileUtils:addSearchResolutionsOrder("res")
   return display.enterScene("scenes.enter_id_scene")
 end
