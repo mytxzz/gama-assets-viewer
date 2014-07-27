@@ -37,9 +37,6 @@ create = (gamaFigure) ->
   xpos = display.cx
   ypos = display.height / 3
 
-  --gamaFigure\setDefaultMotion "idl"
-  --gamaFigure\setDefaultDirection "s"
-
   -- 正方向
   sprite = cc.Sprite\create!
   sprite\setPosition(xpos, ypos)

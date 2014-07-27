@@ -19,7 +19,8 @@ create = ->
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "E4OsP1W" -- animation
-  inputId\setText "8Lowbeq" -- figure
+  --inputId\setText "8Lowbeq" -- figure
+  inputId\setText "3hLQqBp" -- tilemap
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -51,6 +52,15 @@ create = ->
           return console.error "ERROR [enter_id_scene::getFigure] fail to get figure:#{id}. error:#{err}" if err
           console.info "[enter_id_scene::getFigure] got figure for id:#{id}"
           display.enterScene "scenes.show_figure_scene", {gamaFigure}
+          return
+        return
+
+      when "tilemaps"
+
+        gama.tilemap.getById id, (err, gamaTilemap)->
+          return console.error "ERROR [enter_id_scene::getTilemap] fail to get tilemap:#{id}. error:#{err}" if err
+          console.info "[enter_id_scene::getTilemap] got tilemap for id:#{id}"
+          display.enterScene "scenes.show_tilemap_scene", {gamaTilemap}
           return
         return
 

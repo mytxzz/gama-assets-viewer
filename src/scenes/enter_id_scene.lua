@@ -9,7 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("8Lowbeq")
+  inputId:setText("3hLQqBp")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
@@ -43,6 +43,17 @@ create = function()
         console.info("[enter_id_scene::getFigure] got figure for id:" .. tostring(id))
         display.enterScene("scenes.show_figure_scene", {
           gamaFigure
+        })
+      end)
+      return 
+    elseif "tilemaps" == _exp_0 then
+      gama.tilemap.getById(id, function(err, gamaTilemap)
+        if err then
+          return console.error("ERROR [enter_id_scene::getTilemap] fail to get tilemap:" .. tostring(id) .. ". error:" .. tostring(err))
+        end
+        console.info("[enter_id_scene::getTilemap] got tilemap for id:" .. tostring(id))
+        display.enterScene("scenes.show_tilemap_scene", {
+          gamaTilemap
         })
       end)
       return 
