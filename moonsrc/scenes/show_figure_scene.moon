@@ -11,16 +11,21 @@ create = (gamaFigure) ->
 
   assert gamaFigure, "missing figure instance to play on."
 
+
+
   xpos = display.cx
   ypos = display.height / 3
 
-  gamaFigure\setDefaultMotion "idl"
-  gamaFigure\setDefaultDirection "s"
+  --gamaFigure\setDefaultMotion "idl"
+  --gamaFigure\setDefaultDirection "s"
 
   -- 正方向
   sprite = cc.Sprite\create!
   sprite\setPosition(xpos, ypos)
-  gamaFigure\playOnSprite sprite
+  --gamaFigure\playOnSprite sprite
+  character = gama.createCharacterWithSprite(gamaFigure\getId!, gamaFigure, sprite)
+  print "[show_figure_scene] character:#{character}"
+
   scene\addChild sprite
 
   borderColor = cc.c4f(1,0,0,.5)
@@ -41,7 +46,8 @@ create = (gamaFigure) ->
     testLabel\setAnchorPoint(cc.p(0.5, 0.5))
     testMenuItem = cc.MenuItemLabel\create testLabel
     testMenuItem\registerScriptTapHandler ->
-      gamaFigure\playOnSprite sprite, motion
+      --gamaFigure\playOnSprite sprite, motion
+      character\setMotion motion
       return
     testMenuItem\setPosition(cc.p(100 / 2, (s.height - (index) * LINE_SPACE)))
     MainMenu\addChild(testMenuItem, index + 10000, index + 10000)
