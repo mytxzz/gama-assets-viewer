@@ -18,7 +18,7 @@ create = (gamaTilemap) ->
 
   -- 正方向
   sprite = cc.Sprite\create!
-  sprite\setPosition(xpos, ypos)
+  sprite\setPosition(0, display.width)
 
   layer = view_helper.createTouchMoveLayer (touches, event )->
 
