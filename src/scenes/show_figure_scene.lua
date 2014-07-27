@@ -1,5 +1,26 @@
 require("gama")
+local view_helper = require("utils/view_helper")
 local scene = nil
+local DIRECTION_TO_NEXT_CLOCKWISE = {
+  n = "ne",
+  ne = "e",
+  e = "se",
+  se = "s",
+  s = "sw",
+  sw = "w",
+  w = "nw",
+  nw = "n"
+}
+local DIRECTION_TO_NEXT_ANTICLOCKWISE = {
+  n = "nw",
+  nw = "w",
+  w = "sw",
+  sw = "s",
+  s = "se",
+  se = "e",
+  e = "ne",
+  ne = "n"
+}
 local create
 create = function(gamaFigure)
   print("[show_animation_scene::create] gamaFigure:" .. tostring(gamaFigure))
@@ -11,12 +32,27 @@ create = function(gamaFigure)
   sprite:setPosition(xpos, ypos)
   local character = gama.createCharacterWithSprite(gamaFigure:getId(), gamaFigure, sprite)
   print("[show_figure_scene] character:" .. tostring(character))
-  scene:addChild(sprite)
+  local accumenDeltaX = 0
+  local layer = view_helper.createTouchMoveLayer(function(touches, event)
+    local diff = touches[1]:getDelta()
+    accumenDeltaX = accumenDeltaX + diff.x
+    if not (math.abs(accumenDeltaX) > 10) then
+      return 
+    end
+    if accumenDeltaX < 0 then
+      character:setDirection(DIRECTION_TO_NEXT_CLOCKWISE[character:getCurDirection()])
+    else
+      character:setDirection(DIRECTION_TO_NEXT_ANTICLOCKWISE[character:getCurDirection()])
+    end
+    accumenDeltaX = 0
+  end)
+  layer:addChild(sprite)
+  scene:addChild(layer)
   local borderColor = cc.c4f(1, 0, 0, .5)
   local line = cc.DrawNode:create()
   line:drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
   line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)
-  scene:addChild(line)
+  layer:addChild(line)
   local motions = gamaFigure:getMotions()
   local LINE_SPACE = 40
   local s = cc.Director:getInstance():getWinSize()
