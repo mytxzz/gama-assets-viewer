@@ -9,7 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("8Lowbeq")
+  inputId:setText("3hLQqBp")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
@@ -21,11 +21,12 @@ create = function()
     end
     local id = inputId:getText()
     console.info("[enter_id_scene::click] id:" .. tostring(id))
-    local assetType = gama.getTypeById(id)
-    console.info("[enter_id_scene] assetType:" .. tostring(assetType))
-    local _exp_0 = assetType
+    local csx = gama.readJSON(id)
+    console.info("[enter_id_scene] csx:" .. tostring(csx))
+    console.dir(csx)
+    local _exp_0 = csx.type
     if "animations" == _exp_0 then
-      gama.animation.getById(id, function(err, gamaAnimation)
+      gama.animation.getByCSX(csx, function(err, gamaAnimation)
         if err then
           return console.error("ERROR [enter_id_scene::getAnimation] fail to get animation:" .. tostring(id) .. ". error:" .. tostring(err))
         end
@@ -36,7 +37,7 @@ create = function()
       end)
       return 
     elseif "figures" == _exp_0 then
-      gama.figure.getById(id, function(err, gamaFigure)
+      gama.figure.getByCSX(csx, function(err, gamaFigure)
         if err then
           return console.error("ERROR [enter_id_scene::getFigure] fail to get figure:" .. tostring(id) .. ". error:" .. tostring(err))
         end
@@ -47,7 +48,7 @@ create = function()
       end)
       return 
     elseif "tilemaps" == _exp_0 then
-      gama.tilemap.getById(id, function(err, gamaTilemap)
+      gama.tilemap.getByCSX(csx, function(err, gamaTilemap)
         if err then
           return console.error("ERROR [enter_id_scene::getTilemap] fail to get tilemap:" .. tostring(id) .. ". error:" .. tostring(err))
         end
