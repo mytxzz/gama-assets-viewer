@@ -22,10 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include <sstream>
-
 #include "2d/CCFontAtlasCache.h"
+
+#include <iostream>
+#include <sstream>
 
 #include "2d/CCFontFNT.h"
 #include "2d/CCFontFreeType.h"
@@ -69,8 +69,8 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const TTFConfig & config)
 
     if ( it == _atlasMap.end() )
     {
-        auto font = FontFreeType::create(config.fontFilePath, fontSize * contentScaleFactor, config.glyphs, 
-            config.customGlyphs,useDistanceField,config.outlineSize * contentScaleFactor);
+        auto font = FontFreeType::create(config.fontFilePath, fontSize, config.glyphs, 
+            config.customGlyphs, useDistanceField, config.outlineSize);
         if (font)
         {
             auto tempAtlas = font->createFontAtlas();

@@ -2,16 +2,20 @@
 --------------------------------
 -- @module Sprite3D
 -- @extend Node,BlendProtocol
+-- @parent_module cc
 
 --------------------------------
--- overload function: setTexture(cc.Texture2D)
---          
--- overload function: setTexture(string)
---          
+-- @overload self, cc.Texture2D         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] setTexture
 -- @param self
 -- @param #string str
 
+--------------------------------
+-- @function [parent=#Sprite3D] getMesh 
+-- @param self
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
 --------------------------------
 -- @function [parent=#Sprite3D] getBlendFunc 
 -- @param self
@@ -23,10 +27,8 @@
 -- @param #cc.BlendFunc blendfunc
         
 --------------------------------
--- overload function: create(string, string)
---          
--- overload function: create(string)
---          
+-- @overload self, string, string         
+-- @overload self, string         
 -- @function [parent=#Sprite3D] create
 -- @param self
 -- @param #string str

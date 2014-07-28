@@ -32,12 +32,7 @@
 
 #ifndef __SSIZE_T
 #define __SSIZE_T
-
-#ifndef _SSIZE_T_DEFINED
-#define _SSIZE_T_DEFINED
 typedef SSIZE_T ssize_t;
-#endif
-
 #endif // __SSIZE_T
 
 #else
@@ -52,6 +47,7 @@ typedef SSIZE_T ssize_t;
 #include <mutex>
 #include <stdarg.h>
 
+#include "base/CCRef.h"
 #include "base/ccMacros.h"
 #include "base/CCPlatformMacros.h"
 
@@ -78,6 +74,7 @@ void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 class CC_DLL Console
+    : public Ref
 {
 public:
     struct Command {

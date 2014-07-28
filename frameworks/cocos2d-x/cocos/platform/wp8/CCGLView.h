@@ -65,13 +65,15 @@ public:
     const Mat4& getReverseOrientationMatrix () const {return m_reverseOrientationMatrix;};
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
+    Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
 
     // WP8 XAML app
-    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height);
+    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height
+        ,Windows::Graphics::Display::DisplayOrientations orientation);
     virtual void UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);

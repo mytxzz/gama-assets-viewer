@@ -181,7 +181,7 @@ const BlendFunc &LabelBMFont::getBlendFunc() const
     return _label->getBlendFunc();
 }
 
-Node* LabelBMFont::getChildByTag(int tag)
+Node* LabelBMFont::getChildByTag(int tag) const
 {
     return _label->getLetter(tag);
 }
@@ -207,7 +207,7 @@ Rect LabelBMFont::getBoundingBox() const
     return _label->getBoundingBox();
 }
 #if CC_LABELBMFONT_DEBUG_DRAW
-void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated)
+void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     Node::draw(renderer, transform, transformUpdated);
 

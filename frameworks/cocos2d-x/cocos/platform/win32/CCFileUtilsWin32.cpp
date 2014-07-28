@@ -60,37 +60,25 @@ static void _checkPath()
     if (0 == s_resourcePath.length())
     {
         WCHAR utf16Path[CC_MAX_PATH] = {0};
-
-#if CC_QTCREATOR_ON_WINDOWS
-        // Use "%executable_dir%/Resources" as root path.
-        HMODULE hModule = GetModuleHandleW(NULL);
-        GetModuleFileNameW(hModule, utf16Path, sizeof(utf16Path) - 1);
-#else
-        // Use "%workir" as root path.
-        GetCurrentDirectoryW(sizeof(utf16Path) - 1, utf16Path);
-#endif
+        GetCurrentDirectoryW(sizeof(utf16Path)-1, utf16Path);
         
         char utf8Path[CC_MAX_PATH] = {0};
-        int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), NULL, NULL);
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), nullptr, nullptr);
 
         s_resourcePath = convertPathFormatToUnixStyle(utf8Path);
-#if CC_QTCREATOR_ON_WINDOWS
-        s_resourcePath = s_resourcePath.substr(0, s_resourcePath.find_last_of('/')) + "/Resources";
-#endif
-        CCLOG("WINDOWS RES PATH '%s'", s_resourcePath.c_str());
         s_resourcePath.append("/");
     }
 }
 
 FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new FileUtilsWin32();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
-          s_sharedFileUtils = NULL;
+          s_sharedFileUtils = nullptr;
           CCLOG("ERROR: Could not init CCFileUtilsWin32");
         }
     }
@@ -159,10 +147,10 @@ static Data getData(const std::string& filename, bool forString)
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
+        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
         
-        size = ::GetFileSize(fileHandle, NULL);
+        size = ::GetFileSize(fileHandle, nullptr);
 
         if (forString)
         {
@@ -175,7 +163,7 @@ static Data getData(const std::string& filename, bool forString)
         }
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, NULL);
+        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, nullptr);
         ::CloseHandle(fileHandle);
 
         if (!successed)
@@ -224,7 +212,7 @@ Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 
 unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
 {
-    unsigned char * pBuffer = NULL;
+    unsigned char * pBuffer = nullptr;
     *size = 0;
     do
     {
@@ -234,15 +222,15 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
 
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
+        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
         
-        *size = ::GetFileSize(fileHandle, NULL);
+        *size = ::GetFileSize(fileHandle, nullptr);
 
         pBuffer = (unsigned char*) malloc(*size);
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, NULL);
+        successed = ::ReadFile(fileHandle, pBuffer, *size, &sizeRead, nullptr);
         ::CloseHandle(fileHandle);
 
         if (!successed)
@@ -287,7 +275,7 @@ string FileUtilsWin32::getWritablePath() const
 {
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[CC_MAX_PATH + 1];
-    ::GetModuleFileNameA(NULL, full_path, CC_MAX_PATH + 1);
+    ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
 #ifndef _DEBUG
@@ -299,7 +287,7 @@ string FileUtilsWin32::getWritablePath() const
             char app_data_path[CC_MAX_PATH + 1];
 
             // Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
-            if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, app_data_path)))
+            if (SUCCEEDED(SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, app_data_path)))
             {
                 string ret((char*)app_data_path);
 
@@ -312,7 +300,7 @@ string FileUtilsWin32::getWritablePath() const
                 ret += "\\";
 
                 // Create directory
-                if (SUCCEEDED(SHCreateDirectoryExA(NULL, ret.c_str(), NULL)))
+                if (SUCCEEDED(SHCreateDirectoryExA(nullptr, ret.c_str(), nullptr)))
                 {
                     return convertPathFormatToUnixStyle(ret);
                 }

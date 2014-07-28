@@ -43,7 +43,7 @@ public delegate void RequestAdditionalFrameHandler();
 public ref class Direct3DInterop sealed : public Windows::Phone::Input::Interop::IDrawingSurfaceManipulationHandler
 {
 public:
-    Direct3DInterop();
+    Direct3DInterop(Windows::Graphics::Display::DisplayOrientations orientation);
 
 	Windows::Phone::Graphics::Interop::IDrawingSurfaceBackgroundContentProvider^ CreateContentProvider();
 
@@ -86,8 +86,6 @@ private:
     Cocos2dRenderer^ m_renderer;
     Windows::Graphics::Display::DisplayOrientations mCurrentOrientation;
 
-
-    std::mutex mRenderingMutex;
 
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;

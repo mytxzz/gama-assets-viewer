@@ -39,9 +39,10 @@ using namespace PhoneDirect3DXamlAppComponent;
 
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
+Cocos2dRenderer::Cocos2dRenderer(Windows::Graphics::Display::DisplayOrientations orientation): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr), m_messageBoxDelegate(nullptr)
 {
     mApp = new AppDelegate();
+    m_orientation = orientation;
 }
 
 // Creates and restores Cocos2d-x after DirectX and Angle contexts are created or updated
@@ -53,7 +54,7 @@ void Cocos2dRenderer::CreateGLResources()
     {
         mInitialized = true;
         GLView* glview = GLView::create("Test Cpp");
-	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height);
+	    glview->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height,m_orientation);
         director->setOpenGLView(glview);
         CCApplication::getInstance()->run();
         glview->SetXamlEventDelegate(m_delegate);
@@ -63,29 +64,29 @@ void Cocos2dRenderer::CreateGLResources()
     else
     {
         cocos2d::GL::invalidateStateCache();
-        cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
+        cocos2d::ShaderCache::getInstance()->reloadDefaultGLPrograms();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
-        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
-        director->setGLDefaultValues();
-        director->getEventDispatcher()->dispatchEvent(&foregroundEvent);
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         cocos2d::Application::getInstance()->applicationWillEnterForeground();
-    }
+        director->setGLDefaultValues();
+  }
 
     m_loadingComplete = true;
 }
 
 void Cocos2dRenderer::Connect()
 {
+
 }
 
 // purge Cocos2d-x gl GL resourses since the DirectX/Angle Context has been lost 
 void Cocos2dRenderer::Disconnect()
 {
     Application::getInstance()->applicationDidEnterBackground();
-    EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
-    Director::getInstance()->purgeCachedData(); 
+    cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent); 
     CloseAngle();
     m_loadingComplete = false;
 }

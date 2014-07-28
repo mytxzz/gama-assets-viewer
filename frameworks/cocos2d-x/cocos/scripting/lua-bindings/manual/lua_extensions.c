@@ -7,10 +7,14 @@ extern "C" {
 // socket
 #include "luasocket/luasocket.h"
 #include "luasocket/mime.h"
+#include "lpack/lpack.h"
+#include "cjson/lua_cjson.h"
 
 static luaL_Reg luax_exts[] = {
     {"socket.core", luaopen_socket_core},
     {"mime.core", luaopen_mime_core},
+    {"pack", luaopen_pack},
+    {"cjson", luaopen_cjson},
     {NULL, NULL}
 };
 

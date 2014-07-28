@@ -6,6 +6,10 @@ LOCAL_MODULE    := cocos_extension_static
 LOCAL_MODULE_FILENAME := libextension
 
 LOCAL_SRC_FILES := \
+cjson/fpconv.c \
+cjson/lua_cjson.c \
+cjson/strbuf.c \
+lpack/lpack.c \
 assets-manager/AssetsManager.cpp \
 GUI/CCControlExtension/CCControl.cpp \
 GUI/CCControlExtension/CCControlButton.cpp \
@@ -41,8 +45,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
                            $(LOCAL_PATH)/GUI/CCControlExtension \
-                           $(LOCAL_PATH)/GUI/CCScrollView 
-                    
+                           $(LOCAL_PATH)/GUI/CCScrollView
+
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,.)

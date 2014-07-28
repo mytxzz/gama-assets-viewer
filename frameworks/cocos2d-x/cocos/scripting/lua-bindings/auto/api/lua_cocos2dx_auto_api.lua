@@ -52,6 +52,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+
+
+--------------------------------------------------------
 -- the cc AtlasNode
 -- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
 
@@ -732,11 +737,6 @@
 
 
 --------------------------------------------------------
--- the cc LabelTTF
--- @field [parent=#cc] LabelTTF#LabelTTF LabelTTF preloaded module
-
-
---------------------------------------------------------
 -- the cc GLProgram
 -- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
@@ -749,11 +749,6 @@
 --------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
-
-
---------------------------------------------------------
--- the cc LabelBMFont
--- @field [parent=#cc] LabelBMFont#LabelBMFont LabelBMFont preloaded module
 
 
 --------------------------------------------------------
@@ -1127,6 +1122,11 @@
 
 
 --------------------------------------------------------
+-- the cc GLProgramCache
+-- @field [parent=#cc] GLProgramCache#GLProgramCache GLProgramCache preloaded module
+
+
+--------------------------------------------------------
 -- the cc TextureCache
 -- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
 
@@ -1204,6 +1204,21 @@
 --------------------------------------------------------
 -- the cc Sprite3D
 -- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
+
+
+--------------------------------------------------------
+-- the cc Animation3D
+-- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Animate3D
+-- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
 
 
 --------------------------------------------------------

@@ -18,10 +18,6 @@ MciPlayer::MciPlayer()
 , _playing(false)
 , strExt("")
 {
-    //FIXME: hack to make it compile for windows mingw
-    wchar_t wtext[64];
-    mbstowcs(wtext, WIN_CLASS_NAME, strlen(WIN_CLASS_NAME)+1);//Plus null
-
     if (! s_hInstance)
     {
         s_hInstance = GetModuleHandle( NULL );            // Grab An Instance For Our Window
@@ -38,11 +34,8 @@ MciPlayer::MciPlayer()
         wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
         wc.hbrBackground  = NULL;                           // No Background Required For GL
         wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
-#ifdef _MSC_VER
-		wc.lpszClassName  = WIN_CLASS_NAME;         // Set The Class Name
-#elif  __MINGW32__
-        wc.lpszClassName  = wtext;                 // Set The Class Name
-#endif
+        wc.lpszClassName  = WIN_CLASS_NAME;                 // Set The Class Name
+
         if (! RegisterClass(&wc)
             && 1410 != GetLastError())
         {
@@ -52,11 +45,7 @@ MciPlayer::MciPlayer()
 
     _wnd = CreateWindowEx(
         WS_EX_APPWINDOW,                                    // Extended Style For The Window
-#ifdef _MSC_VER
-		WIN_CLASS_NAME,
-#elif	__MINGW32__
-        wtext,                                        // Class Name
-#endif
+        WIN_CLASS_NAME,                                        // Class Name
         NULL,                                        // Window Title
         WS_POPUPWINDOW,/*WS_OVERLAPPEDWINDOW*/               // Defined Window Style
         0, 0,                                                // Window Position
@@ -99,15 +88,7 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-
-#ifdef  _MSC_VER
-		mciOpen.lpstrElementName = pFileName;
-#elif	__MINGW32__
-		//FIXME: hack to make it compile for windows mingw
-        wchar_t wtext[64];
-        mbstowcs(wtext, pFileName, strlen(pFileName)+1);//Plus null
-        mciOpen.lpstrElementName = wtext;
-#endif
+        mciOpen.lpstrElementName = pFileName;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
         BREAK_IF(mciError);
@@ -161,9 +142,9 @@ void MciPlayer::Resume()
         MCI_STATUS_PARMS mciStatusParms;
         MCI_PLAY_PARMS   mciPlayParms;  
         mciStatusParms.dwItem = MCI_STATUS_POSITION;   
-        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM,(DWORD)(LPVOID)&mciStatusParms); // MCI_STATUS   
+        _SendGenericCommand(MCI_STATUS, MCI_STATUS_ITEM, reinterpret_cast<DWORD_PTR>(&mciStatusParms)); // MCI_STATUS   
         mciPlayParms.dwFrom = mciStatusParms.dwReturn;  // get position  
-        _SendGenericCommand(MCI_PLAY, MCI_FROM, (DWORD)(LPVOID)&mciPlayParms); // MCI_FROM
+        _SendGenericCommand(MCI_PLAY, MCI_FROM, reinterpret_cast<DWORD_PTR>(&mciPlayParms)); // MCI_FROM
     } 
     else
     {
