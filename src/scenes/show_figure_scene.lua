@@ -54,11 +54,11 @@ create = function(gamaFigure)
   line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)
   layer:addChild(line)
   local motions = gamaFigure:getMotions()
-  local LINE_SPACE = 40
+  local LINE_SPACE = 60
   local s = cc.Director:getInstance():getWinSize()
   local MainMenu = cc.Menu:create()
   for index, motion in ipairs(motions) do
-    local testLabel = cc.Label:create(motion, 'Arial', 24)
+    local testLabel = cc.Label:createWithSystemFont(motion, 'Arial', 42)
     testLabel:setAnchorPoint(cc.p(0.5, 0.5))
     local testMenuItem = cc.MenuItemLabel:create(testLabel)
     testMenuItem:registerScriptTapHandler(function()

@@ -73,11 +73,11 @@ create = (gamaFigure) ->
   motions = gamaFigure\getMotions!
 
   -- add menu items for tests
-  LINE_SPACE = 40
+  LINE_SPACE = 60
   s = cc.Director\getInstance()\getWinSize()
   MainMenu = cc.Menu\create!
   for index, motion in ipairs motions
-    testLabel = cc.Label\create(motion, 'Arial', 24)
+    testLabel = cc.Label\createWithSystemFont(motion, 'Arial', 42)
     testLabel\setAnchorPoint(cc.p(0.5, 0.5))
     testMenuItem = cc.MenuItemLabel\create testLabel
     testMenuItem\registerScriptTapHandler ->
