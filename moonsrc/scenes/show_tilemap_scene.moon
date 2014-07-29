@@ -18,12 +18,13 @@ create = (gamaTilemap) ->
 
   -- 正方向
   sprite = cc.Sprite\create!
-  sprite\setPosition(0, display.width)
+  sprite\setPosition(0, 0)
 
   layer = view_helper.createTouchMoveLayer (touches, event )->
 
     diff = touches[1]\getDelta!
     --accumenDeltaX += diff.x
+    gamaTilemap\moveBy diff
 
     return
 

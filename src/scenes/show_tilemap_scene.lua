@@ -9,9 +9,10 @@ create = function(gamaTilemap)
   local xpos = display.cx
   local ypos = display.cy
   local sprite = cc.Sprite:create()
-  sprite:setPosition(0, display.width)
+  sprite:setPosition(0, 0)
   local layer = view_helper.createTouchMoveLayer(function(touches, event)
     local diff = touches[1]:getDelta()
+    gamaTilemap:moveBy(diff)
   end)
   gamaTilemap:bindToSprite(sprite)
   layer:addChild(sprite)
