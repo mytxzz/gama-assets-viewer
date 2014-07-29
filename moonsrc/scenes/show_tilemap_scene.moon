@@ -16,6 +16,10 @@ create = (gamaTilemap) ->
   xpos = display.cx
   ypos = display.cy
 
+  label = cc.LabelTTF\create "touch to move", "Arial", 42
+  label\setPosition(cc.p(display.cx, display.cy))
+  label\setColor(display.COLOR_WHITE)
+
   -- 正方向
   sprite = cc.Sprite\create!
   sprite\setPosition(0, 0)
@@ -23,20 +27,11 @@ create = (gamaTilemap) ->
   layer = view_helper.createTouchMoveLayer (touches, event )->
 
     diff = touches[1]\getDelta!
-    --accumenDeltaX += diff.x
     gamaTilemap\moveBy diff
 
+    label\setString "x:#{math.floor(gamaTilemap.x + 0.5)}, y:#{math.floor(gamaTilemap.y + 0.5)}, lbX:#{math.floor gamaTilemap.container\getPositionX!}, lbY:#{math.floor gamaTilemap.container\getPositionY!}"
+
     return
-
-    --return unless math.abs(accumenDeltaX) > 10
-
-    --if accumenDeltaX < 0
-      --character\setDirection(DIRECTION_TO_NEXT_CLOCKWISE[character\getCurDirection!])
-    --else
-      --character\setDirection(DIRECTION_TO_NEXT_ANTICLOCKWISE[character\getCurDirection!])
-
-    --accumenDeltaX = 0
-    --return
 
   gamaTilemap\bindToSprite sprite
 
@@ -49,6 +44,8 @@ create = (gamaTilemap) ->
   line\drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
   line\drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)
   layer\addChild line
+
+  scene\addChild label
 
   return scene
 

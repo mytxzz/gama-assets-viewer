@@ -23,7 +23,6 @@ create = function()
     console.info("[enter_id_scene::click] id:" .. tostring(id))
     local csx = gama.readJSON(id)
     console.info("[enter_id_scene] csx:" .. tostring(csx))
-    console.dir(csx)
     local _exp_0 = csx.type
     if "animations" == _exp_0 then
       gama.animation.getByCSX(csx, function(err, gamaAnimation)

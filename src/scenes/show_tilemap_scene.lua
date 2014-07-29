@@ -8,11 +8,15 @@ create = function(gamaTilemap)
   assert(gamaTilemap, "missing data instance to play on.")
   local xpos = display.cx
   local ypos = display.cy
+  local label = cc.LabelTTF:create("touch to move", "Arial", 42)
+  label:setPosition(cc.p(display.cx, display.cy))
+  label:setColor(display.COLOR_WHITE)
   local sprite = cc.Sprite:create()
   sprite:setPosition(0, 0)
   local layer = view_helper.createTouchMoveLayer(function(touches, event)
     local diff = touches[1]:getDelta()
     gamaTilemap:moveBy(diff)
+    label:setString("x:" .. tostring(math.floor(gamaTilemap.x + 0.5)) .. ", y:" .. tostring(math.floor(gamaTilemap.y + 0.5)) .. ", lbX:" .. tostring(math.floor(gamaTilemap.container:getPositionX())) .. ", lbY:" .. tostring(math.floor(gamaTilemap.container:getPositionY())))
   end)
   gamaTilemap:bindToSprite(sprite)
   layer:addChild(sprite)
@@ -22,6 +26,7 @@ create = function(gamaTilemap)
   line:drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
   line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)
   layer:addChild(line)
+  scene:addChild(label)
   return scene
 end
 return {

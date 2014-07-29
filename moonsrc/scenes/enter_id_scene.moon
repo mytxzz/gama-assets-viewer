@@ -34,7 +34,6 @@ create = ->
 
     csx = gama.readJSON id
     console.info "[enter_id_scene] csx:#{csx}"
-    console.dir csx
 
     switch csx.type
 
@@ -69,6 +68,33 @@ create = ->
         console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{assetType}"
 
   scene\addChild btnView
+
+
+  --makeRect = (w, h, color)->
+    --node = cc.DrawNode\create!
+    --node\drawSegment(cc.p(0, h), cc.p(w, h), 0.5, color)
+    --node\drawSegment(cc.p(w, 0), cc.p(w, h), 0.5, color)
+    --node\drawSegment(cc.p(0, 0), cc.p(0, h), 0.5, color)
+    --node\drawSegment(cc.p(0, 0), cc.p(w, 0), 0.5, color)
+    --return node
+
+
+  --spRed = makeRect(200, 200, cc.c4f(1,0,0,.5))
+  --spGreen = makeRect(200, 200, cc.c4f(0,1,0,.5))
+  --spBlue = makeRect(200, 200, cc.c4f(0,0,1,.5))
+
+  --spRed\setAnchorPoint(0, 1)
+  --spGreen\setAnchorPoint(1, 1)
+  --spBlue\setAnchorPoint(1, 1)
+
+  --scene\addChild spRed
+  --spRed\addChild spGreen
+
+  --spRed\setPosition 100, 100
+  --spGreen\setPosition 200, 100
+  --spBlue\setPosition 100, 100
+
+
 
   return scene
 
