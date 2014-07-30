@@ -27,9 +27,9 @@ create = (gamaTilemap) ->
   layer = view_helper.createTouchMoveLayer (touches, event )->
 
     diff = touches[1]\getDelta!
-    gamaTilemap\moveBy diff
+    centerX, centerY = gamaTilemap\moveBy diff.x, diff.y
 
-    label\setString "x:#{math.floor(gamaTilemap.x + 0.5)}, y:#{math.floor(gamaTilemap.y + 0.5)}, lbX:#{math.floor gamaTilemap.container\getPositionX!}, lbY:#{math.floor gamaTilemap.container\getPositionY!}"
+    label\setString "x:#{math.floor(centerX + 0.5)}, y:#{math.floor(centerY + 0.5)}, lbX:#{math.floor gamaTilemap.container\getPositionX!}, lbY:#{math.floor gamaTilemap.container\getPositionY!}"
 
     return
 
