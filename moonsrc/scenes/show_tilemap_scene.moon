@@ -36,8 +36,10 @@ create = (gamaTilemap) ->
   layer\addChild sprite
   scene\addChild layer
 
-  borderColor = cc.c4f(1,0,0,.5)
 
+
+
+  borderColor = cc.c4f(1,0,0,.5)
   line = cc.DrawNode\create!
   line\drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
   line\drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)

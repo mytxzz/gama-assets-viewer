@@ -1,6 +1,17 @@
 require("gama")
 local view_helper = require("utils/view_helper")
 local scene = nil
+local COLOR_RED = cc.c4f(1, 0, 0, .5)
+local COLOR_GREEN = cc.c4f(0, 1, 0, .5)
+local drawRect
+drawRect = function(drawNode, x, y, w, h, color)
+  local points = { }
+  table.insert(points, cc.p(x, y))
+  table.insert(points, cc.p(x + w, y))
+  table.insert(points, cc.p(x + w, y + h))
+  table.insert(points, cc.p(x, y + h))
+  return drawNode:drawPolygon(points, 4, COLOR_RED, 0, COLOR_RED)
+end
 local create
 create = function(sceneDataPack)
   print("[show_scene_scene::create] sceneDataPack:" .. tostring(sceneDataPack))
@@ -21,8 +32,11 @@ create = function(sceneDataPack)
     label:setString("x:" .. tostring(math.floor(centerX + 0.5)) .. ", y:" .. tostring(math.floor(centerY + 0.5)) .. ", lbX:" .. tostring(math.floor(gamaTilemap.container:getPositionX())) .. ", lbY:" .. tostring(math.floor(gamaTilemap.container:getPositionY())))
   end)
   gamaTilemap:bindToSprite(tilemapSprite)
+  local maskNode = cc.DrawNode:create()
   tilemapLayer:addChild(tilemapSprite)
+  gamaTilemap.container:addChild(maskNode)
   scene:addChild(tilemapLayer)
+  drawRect(maskNode, 100, 100, 300, 300, COLOR_RED)
   if type(sceneData.ornaments) == "table" then
     local _list_0 = sceneData.ornaments
     for _index_0 = 1, #_list_0 do
@@ -36,10 +50,9 @@ create = function(sceneDataPack)
       end
     end
   end
-  local borderColor = cc.c4f(1, 0, 0, .5)
   local line = cc.DrawNode:create()
-  line:drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, borderColor)
-  line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, borderColor)
+  line:drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, COLOR_RED)
+  line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, COLOR_RED)
   scene:addChild(line)
   scene:addChild(label)
   return scene
