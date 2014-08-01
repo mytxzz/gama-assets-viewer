@@ -2,12 +2,10 @@ require("gama")
 local view_helper = require("utils/view_helper")
 local scene = nil
 local create
-create = function(sceneDataPack)
-  print("[show_scene_scene::create] sceneDataPack:" .. tostring(sceneDataPack))
+create = function(gamaTilemap)
+  print("[show_animation_scene::create] gamaTilemap:" .. tostring(gamaTilemap))
   scene = cc.Scene:create()
-  assert(sceneDataPack, "missing data instance to play on.")
-  local sceneData = sceneDataPack[1]
-  local gamaTilemap = sceneDataPack[2]
+  assert(gamaTilemap, "missing data instance to play on.")
   local xpos = display.cx
   local ypos = display.cy
   local label = cc.LabelTTF:create("touch to move", "Arial", 42)

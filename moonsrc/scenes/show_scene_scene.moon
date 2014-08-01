@@ -5,18 +5,13 @@ view_helper = require "utils/view_helper"
 
 scene = nil
 
-create = (sceneDataPack) ->
+create = (gamaTilemap) ->
 
-  print "[show_scene_scene::create] sceneDataPack:#{sceneDataPack}"
+  print "[show_animation_scene::create] gamaTilemap:#{gamaTilemap}"
 
   scene = cc.Scene\create()
 
-  assert sceneDataPack, "missing data instance to play on."
-
-
-  sceneData = sceneDataPack[1]
-  gamaTilemap = sceneDataPack[2]
-
+  assert gamaTilemap, "missing data instance to play on."
 
   xpos = display.cx
   ypos = display.cy
@@ -25,6 +20,7 @@ create = (sceneDataPack) ->
   label\setPosition(cc.p(display.cx, display.cy))
   label\setColor(display.COLOR_WHITE)
 
+  -- 正方向
   sprite = cc.Sprite\create!
   sprite\setPosition(0, 0)
 

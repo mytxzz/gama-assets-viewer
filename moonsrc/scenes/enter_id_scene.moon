@@ -20,7 +20,8 @@ create = ->
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "E4OsP1W" -- animation
   --inputId\setText "8Lowbeq" -- figure
-  inputId\setText "3hLQqBp" -- tilemap
+  --inputId\setText "3hLQqBp" -- tilemap
+  inputId\setText "EH8H2qZ" -- scene
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -32,40 +33,55 @@ create = ->
     id = inputId\getText!
     console.info "[enter_id_scene::click] id:#{id}"
 
-    csx = gama.readJSON id
-    console.info "[enter_id_scene] csx:#{csx}"
+    gama.readJSONAsync id, (err, csx)->
+      return console.error "[enter_id_scene] readJSONAsync failed. error:#{err}" if err
 
-    switch csx.type
+      --console.info "[enter_id_scene] csx:#{csx}"
+      --console.dir csx
 
-      when "animations"
+      switch csx.type
 
-        gama.animation.getByCSX csx, (err, gamaAnimation)->
-          return console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}" if err
-          console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
-          display.enterScene "scenes.show_animation_scene", {gamaAnimation}
+        when "animations"
+
+          gama.animation.getByCSX csx, (err, gamaAnimation)->
+            return console.error "ERROR [enter_id_scene::getAnimation] fail to get animation:#{id}. error:#{err}" if err
+            console.info "[enter_id_scene::getAnimation] got animation for id:#{id}"
+            display.enterScene "scenes.show_animation_scene", {gamaAnimation}
+            return
           return
-        return
 
-      when "figures"
+        when "figures"
 
-        gama.figure.getByCSX csx, (err, gamaFigure)->
-          return console.error "ERROR [enter_id_scene::getFigure] fail to get figure:#{id}. error:#{err}" if err
-          console.info "[enter_id_scene::getFigure] got figure for id:#{id}"
-          display.enterScene "scenes.show_figure_scene", {gamaFigure}
+          gama.figure.getByCSX csx, (err, gamaFigure)->
+            return console.error "ERROR [enter_id_scene::getFigure] fail to get figure:#{id}. error:#{err}" if err
+            console.info "[enter_id_scene::getFigure] got figure for id:#{id}"
+            display.enterScene "scenes.show_figure_scene", {gamaFigure}
+            return
           return
-        return
 
-      when "tilemaps"
+        when "tilemaps"
 
-        gama.tilemap.getByCSX csx, (err, gamaTilemap)->
-          return console.error "ERROR [enter_id_scene::getTilemap] fail to get tilemap:#{id}. error:#{err}" if err
-          console.info "[enter_id_scene::getTilemap] got tilemap for id:#{id}"
-          display.enterScene "scenes.show_tilemap_scene", {gamaTilemap}
+          gama.tilemap.getByCSX csx, (err, gamaTilemap)->
+            return console.error "ERROR [enter_id_scene::getTilemap] fail to get tilemap:#{id}. error:#{err}" if err
+            console.info "[enter_id_scene::getTilemap] got tilemap for id:#{id}"
+            display.enterScene "scenes.show_tilemap_scene", {gamaTilemap}
+            return
           return
-        return
 
-      else
-        console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{assetType}"
+        when "scenes"
+          gama.scene.loadByCSX csx, (err, sceneDataPack)->
+            console.info "[enter_id_scene::loadByCSX]"
+            console.dir err
+            console.dir sceneDataPack
+
+            return console.error "ERROR [enter_id_scene::loadScene] fail to load scene:#{id}. error:#{err}" if err
+            console.info "[enter_id_scene::loadScene] load scene for id:#{id}"
+            display.enterScene "scenes.show_scene_scene", {sceneDataPack}
+
+        else
+          console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{assetType}"
+
+
 
   scene\addChild btnView
 
