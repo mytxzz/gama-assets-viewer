@@ -1,5 +1,9 @@
 
 require "gama"
+bit = require "bit"
+
+console.dir bit
+
 
 view_helper = require "utils/view_helper"
 
@@ -8,13 +12,14 @@ scene = nil
 COLOR_RED = cc.c4f(1,0,0,.5)
 COLOR_GREEN = cc.c4f(0,1,0,.5)
 
+fromhex = (str)-> return str\gsub('..', ((cc)-> return string.char(tonumber(cc, 16))))
 
 drawRect = (drawNode, x, y, w, h, color)->
   points = {}
   table.insert(points, cc.p(x,y))
   table.insert(points, cc.p(x + w, y))
-  table.insert(points, cc.p(x + w, y + h))
-  table.insert(points, cc.p(x,y + h))
+  table.insert(points, cc.p(x + w, y - h))
+  table.insert(points, cc.p(x,y - h))
   drawNode\drawPolygon(points, 4, COLOR_RED, 0, COLOR_RED)
 
 create = (sceneDataPack) ->
@@ -51,27 +56,39 @@ create = (sceneDataPack) ->
 
   gamaTilemap\bindToSprite tilemapSprite
 
-
   -- 加入辅助线
   maskNode = cc.DrawNode\create!
+  --maskNode\setAnchorPoint 0, 1
 
   tilemapLayer\addChild tilemapSprite
   gamaTilemap.container\addChild maskNode
   scene\addChild tilemapLayer
 
-  drawRect(maskNode, 100, 100, 300, 300, COLOR_RED)
-
-
+  rectLeft, rectTop = gamaTilemap\uiCordToVertexCord(0, 0)
+  drawRect(maskNode, rectLeft, rectTop, 300, 300, COLOR_RED)
 
   -- 加入场景装饰物
   if type(sceneData.ornaments) == "table"
     for ornament in *sceneData.ornaments
-      console.log "[show_scene_scene::add scene ornaments] #{ornament.x}, #{ornament.y}, #{ornament.m}"
+      --console.log "[show_scene_scene::add scene ornaments] #{ornament.x}, #{ornament.y}, #{ornament.m}"
       animation = sceneDataPack[ornament.id]
       if animation
         gamaTilemap\addOrnament animation, ornament.x, ornament.y, ornament.m
       else
         console.log "[show_scene_scene::add scene ornaments] missing gama instance for key:#{ornament.id}"
+
+  console.info "[show_scene_scene::mask_binary] message"
+  console.dir sceneData.mask_binary
+
+  console.log "[show_scene_scene::method] isWalkableAt:#{sceneData\isWalkableAt(10, 10)}"
+  console.log "[show_scene_scene::method] isMaskedAt:#{sceneData\isMaskedAt(10, 10)}"
+
+
+  --binaryBlock = fromhex(sceneData.mask_binary[1])
+  --binaryMask =  fromhex(sceneData.mask_binary[2])
+
+  --console.info "[show_scene_scene] binaryBlock:#{#binaryBlock}, mask_binary:#{#sceneData.mask_binary[1]}"
+  --console.info "[show_scene_scene] binaryMask:#{#binaryMask}, mask_binary:#{#sceneData.mask_binary[2]}"
 
   -- 加入辅助线
   line = cc.DrawNode\create!
