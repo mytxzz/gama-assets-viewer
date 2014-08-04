@@ -50,10 +50,10 @@ create = function(sceneDataPack)
       local rectLeft, rectTop = gamaTilemap:uiCordToVertexCord(pixelX, -pixelY)
       local brickX = math.floor(pixelX / sceneData.brickUnitWidth)
       local brickY = math.floor(pixelY / sceneData.brickUnitHeight)
-      if not (sceneData:isWalkableAt(brickX, brickY)) then
+      if not (sceneData:isWalkableAtBrick(brickX, brickY)) then
         drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_RED)
       end
-      if sceneData:isMaskedAt(brickX, brickY) then
+      if sceneData:isMaskedAtBrick(brickX, brickY) then
         drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_BLUE)
       end
     end

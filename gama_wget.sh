@@ -19,6 +19,9 @@ fetch(){
 }
 
 
+fetch 8DP12iG.csx
+fetch DSbqHUU
+
 fetch 5IbPnUH.csx
 fetch 6IwNfWP
 fetch DpbOuXt

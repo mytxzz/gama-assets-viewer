@@ -74,8 +74,8 @@ create = (sceneDataPack) ->
       rectLeft, rectTop = gamaTilemap\uiCordToVertexCord(pixelX, -pixelY)
       brickX = math.floor(pixelX / sceneData.brickUnitWidth)
       brickY = math.floor(pixelY / sceneData.brickUnitHeight)
-      drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_RED) unless sceneData\isWalkableAt(brickX, brickY)
-      drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_BLUE) if sceneData\isMaskedAt(brickX, brickY)
+      drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_RED) unless sceneData\isWalkableAtBrick(brickX, brickY)
+      drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_BLUE) if sceneData\isMaskedAtBrick(brickX, brickY)
 
 
   -- 加入场景装饰物
