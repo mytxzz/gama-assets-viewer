@@ -5,6 +5,7 @@ local view_helper = require("utils/view_helper")
 local scene = nil
 local COLOR_RED = cc.c4f(1, 0, 0, .5)
 local COLOR_GREEN = cc.c4f(0, 1, 0, .5)
+local COLOR_BLUE = cc.c4f(0, 0, 1, .5)
 local fromhex
 fromhex = function(str)
   return str:gsub('..', (function(cc)
@@ -18,7 +19,7 @@ drawRect = function(drawNode, x, y, w, h, color)
   table.insert(points, cc.p(x + w, y))
   table.insert(points, cc.p(x + w, y - h))
   table.insert(points, cc.p(x, y - h))
-  return drawNode:drawPolygon(points, 4, COLOR_RED, 0, COLOR_RED)
+  return drawNode:drawPolygon(points, 4, color, 0, color)
 end
 local create
 create = function(sceneDataPack)
@@ -44,8 +45,19 @@ create = function(sceneDataPack)
   tilemapLayer:addChild(tilemapSprite)
   gamaTilemap.container:addChild(maskNode)
   scene:addChild(tilemapLayer)
-  local rectLeft, rectTop = gamaTilemap:uiCordToVertexCord(0, 0)
-  drawRect(maskNode, rectLeft, rectTop, 300, 300, COLOR_RED)
+  for pixelY = 0, gamaTilemap.pixelHeight - 1, 16 do
+    for pixelX = 0, gamaTilemap.pixelWidth - 1, 32 do
+      local rectLeft, rectTop = gamaTilemap:uiCordToVertexCord(pixelX, -pixelY)
+      local brickX = math.floor(pixelX / sceneData.brickUnitWidth)
+      local brickY = math.floor(pixelY / sceneData.brickUnitHeight)
+      if not (sceneData:isWalkableAt(brickX, brickY)) then
+        drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_RED)
+      end
+      if sceneData:isMaskedAt(brickX, brickY) then
+        drawRect(maskNode, rectLeft, rectTop, 32, 16, COLOR_BLUE)
+      end
+    end
+  end
   if type(sceneData.ornaments) == "table" then
     local _list_0 = sceneData.ornaments
     for _index_0 = 1, #_list_0 do
@@ -58,10 +70,6 @@ create = function(sceneDataPack)
       end
     end
   end
-  console.info("[show_scene_scene::mask_binary] message")
-  console.dir(sceneData.mask_binary)
-  console.log("[show_scene_scene::method] isWalkableAt:" .. tostring(sceneData:isWalkableAt(10, 10)))
-  console.log("[show_scene_scene::method] isMaskedAt:" .. tostring(sceneData:isMaskedAt(10, 10)))
   local line = cc.DrawNode:create()
   line:drawSegment(cc.p(0, ypos), cc.p(display.width, ypos), 0.5, COLOR_RED)
   line:drawSegment(cc.p(xpos, 0), cc.p(xpos, display.height), 0.5, COLOR_RED)
