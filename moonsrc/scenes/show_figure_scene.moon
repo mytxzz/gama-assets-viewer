@@ -42,6 +42,7 @@ create = (gamaFigure) ->
   sprite\setPosition(xpos, ypos)
   --gamaFigure\playOnSprite sprite
   character = gama.createCharacterWithSprite(gamaFigure\getId!, gamaFigure, sprite)
+  character\addContinouseMotionId "ded", "run"
   print "[show_figure_scene] character:#{character}"
 
   accumenDeltaX = 0

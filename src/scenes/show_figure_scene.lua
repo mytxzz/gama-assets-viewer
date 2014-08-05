@@ -31,6 +31,7 @@ create = function(gamaFigure)
   local sprite = cc.Sprite:create()
   sprite:setPosition(xpos, ypos)
   local character = gama.createCharacterWithSprite(gamaFigure:getId(), gamaFigure, sprite)
+  character:addContinouseMotionId("ded", "run")
   print("[show_figure_scene] character:" .. tostring(character))
   local accumenDeltaX = 0
   local layer = view_helper.createTouchMoveLayer(function(touches, event)
