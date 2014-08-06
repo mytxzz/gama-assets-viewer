@@ -29,23 +29,19 @@ updateState = =>
   currentState = self\getCurrentState!
   return if currentState == nil
 
-  if type(currentState) == "function"
-    -- 如果state 是一个可以执行的函数，那么执行这个函数
-    currentState(self)
+  -- 如果state 是一个可以执行的函数，那么执行这个函数
+  return currentState(self) if type(currentState) == "function"
 
-  elseif type(self.emit) == "function"
-    -- 如果 self 是一个 事件触发器，那么抛出事件
-    self\emit("stack_fsm_update", currentState)
+  -- 如果 self 是一个 事件触发器，那么抛出事件
+  return self\emit("stack_fsm_update", currentState) if type(self.emit) == "function"
 
-  elseif type(self.onStackFSMUpdate) == "function"
-    -- 如果 self 上有通用的 stack fsm 的监听，那么调用这个事件监听方法
-    self\onStackFSMUpdate(currentState)
+  -- 如果 self 上有通用的 stack fsm 的监听，那么调用这个事件监听方法
+  return self\onStackFSMUpdate(currentState) if type(self.onStackFSMUpdate) == "function"
 
-  elseif type(self["on#{currentState}"]) == "function"
-    -- 如果 self 上有 on 事件监听方法，那么调用这个事件监听方法
-    self["on#{currentState}"](self)
+  -- 如果 self 上有 on 事件监听方法，那么调用这个事件监听方法
+  return self["on#{currentState}"](self) if type(self["on#{currentState}"]) == "function"
 
-  return @        -- chainalbe
+  return
 
 -- 重设状态
 resetState = (state)=>

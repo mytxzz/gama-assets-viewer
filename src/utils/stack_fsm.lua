@@ -37,15 +37,17 @@ updateState = function(self)
     return 
   end
   if type(currentState) == "function" then
-    currentState(self)
-  elseif type(self.emit) == "function" then
-    self:emit("stack_fsm_update", currentState)
-  elseif type(self.onStackFSMUpdate) == "function" then
-    self:onStackFSMUpdate(currentState)
-  elseif type(self["on" .. tostring(currentState)]) == "function" then
-    self["on" .. tostring(currentState)](self)
+    return currentState(self)
   end
-  return self
+  if type(self.emit) == "function" then
+    return self:emit("stack_fsm_update", currentState)
+  end
+  if type(self.onStackFSMUpdate) == "function" then
+    return self:onStackFSMUpdate(currentState)
+  end
+  if type(self["on" .. tostring(currentState)]) == "function" then
+    return self["on" .. tostring(currentState)](self)
+  end
 end
 local resetState
 resetState = function(self, state)
