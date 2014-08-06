@@ -10,3 +10,6 @@
 [submodule "src/vendor/underscore.lua"]
 	path = src/vendor/underscore.lua
 	url = git@github.com:mirven/underscore.lua.git
+[submodule "src/vendor/events.lua"]
+	path = src/vendor/events.lua
+	url = git@github.com:yi/events.lua.git
