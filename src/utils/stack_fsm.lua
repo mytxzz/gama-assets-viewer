@@ -31,15 +31,17 @@ getCurrentState = function(self)
   return states[#states]
 end
 local updateState
-updateState = function(self, self)
-  local currentState = self.getCurrentState()
+updateState = function(self)
+  local currentState = self:getCurrentState()
   if currentState == nil then
     return 
   end
   if type(currentState) == "function" then
     currentState(self)
   elseif type(self.emit) == "function" then
-    self.emit(currentState, self)
+    self:emit("stack_fsm_update", currentState)
+  elseif type(self.onStackFSMUpdate) == "function" then
+    self:onStackFSMUpdate(currentState)
   elseif type(self["on" .. tostring(currentState)]) == "function" then
     self["on" .. tostring(currentState)](self)
   end
@@ -58,7 +60,7 @@ return {
     if not (type(tbl) == "table") then
       tbl = { }
     end
-    if tbl[IDENTIFIER] ~= { } then
+    if type(rawget(tbl, IDENTIFIER)) == "table" then
       return print("[stack_fsm::StackFSM] " .. tostring(tbl) .. " is already an StackFSM")
     end
     rawset(tbl, IDENTIFIER, { })

@@ -1,6 +1,6 @@
 
 require "gama"
-
+Character = require "models.character"
 view_helper = require "utils/view_helper"
 
 scene = nil
@@ -41,8 +41,8 @@ create = (gamaFigure) ->
   sprite = cc.Sprite\create!
   sprite\setPosition(xpos, ypos)
   --gamaFigure\playOnSprite sprite
-  character = gama.createCharacterWithSprite(gamaFigure\getId!, gamaFigure, sprite)
-  character\addContinouseMotionId "ded", "run"
+  character = Character(gamaFigure\getId!, gamaFigure, sprite)
+  --character\addContinouseMotionId "ded", "run"
   print "[show_figure_scene] character:#{character}"
 
   accumenDeltaX = 0

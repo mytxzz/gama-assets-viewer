@@ -19,25 +19,32 @@ pushState = (state, allowDuplication)=>
 
 --- 返回当前状态
 getCurrentState = =>
-  states = rawget @, IDENTIFIER
+  states = rawget(@, IDENTIFIER)
   return print "[stack_fsm::pushState] invalid stack_fsm:#{@}" unless type(states) == "table"
   return nil unless #states > 0
   return states[#states]
 
 --- 执行当前状态
-updateState = (self)=>
-  currentState = self.getCurrentState!
+updateState = =>
+  currentState = self\getCurrentState!
   return if currentState == nil
 
   if type(currentState) == "function"
     -- 如果state 是一个可以执行的函数，那么执行这个函数
     currentState(self)
+
   elseif type(self.emit) == "function"
     -- 如果 self 是一个 事件触发器，那么抛出事件
-    self.emit(currentState, self)
+    self\emit("stack_fsm_update", currentState)
+
+  elseif type(self.onStackFSMUpdate) == "function"
+    -- 如果 self 上有通用的 stack fsm 的监听，那么调用这个事件监听方法
+    self\onStackFSMUpdate(currentState)
+
   elseif type(self["on#{currentState}"]) == "function"
     -- 如果 self 上有 on 事件监听方法，那么调用这个事件监听方法
     self["on#{currentState}"](self)
+
   return @        -- chainalbe
 
 -- 重设状态
@@ -54,7 +61,7 @@ return {
 
     tbl = {} unless type(tbl) == "table"
 
-    return print "[stack_fsm::StackFSM] #{tbl} is already an StackFSM" if tbl[IDENTIFIER] != {}
+    return print "[stack_fsm::StackFSM] #{tbl} is already an StackFSM" if type(rawget(tbl, IDENTIFIER)) == "table"
 
     rawset tbl, IDENTIFIER, {}
 

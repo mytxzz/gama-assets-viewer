@@ -1,4 +1,5 @@
-StackFSM = require("util.stack_fsm").StackFSM
+StackFSM = require("utils.stack_fsm").StackFSM
+EventEmitter = require("events").EventEmitter
 
 CONTINOUSE_MOTION_IDS =
   idl: true
@@ -20,20 +21,35 @@ class Character
 
   new: (@id, @figure, @sprite)=>
     @curDirection = "s"
+
+    --EventEmitter(@) -- 把自己变成一个事件触发器
+    --@on "stack_fsm_update", (motionId)->
+      --console.info "[character::stack_fsm_update] motionId:#{motionId}"
+
     StackFSM(@)     -- 把自己变成一个多堆式状态机
-    @pushState("idl")\updateState!
+    @pushState("idl")
+    @updateState!
+    return
 
   getCurrentMotion: => @getCurrentState!
 
-  applyChange: =>
+  onStackFSMUpdate: (motionId)=>
+    console.info "[character::onStackFSMUpdate] motionId:#{motionId}"
+    @applyChange(motionId)
+    return
+
+  applyChange: (curMotion)=>
     return unless @sprite
+
     @sprite\setFlippedX(DIRECTION_TO_FLIPX[@curDirection])
 
-    if @continouseMotionIds[@curMotion]
-      @figure\playOnSprite @sprite, @getCurrentMotion!, @curDirection
+    curMotion = curMotion or @getCurrentMotion!
+
+    if CONTINOUSE_MOTION_IDS[curMotion]
+      @figure\playOnSprite @sprite, curMotion, @curDirection
       return
 
-    @figure\playOnceOnSprite @sprite, @getCurrentMotion!, @curDirection
+    @figure\playOnceOnSprite @sprite, curMotion, @curDirection
     return
 
   setDirection: (value)=>

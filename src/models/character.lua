@@ -1,4 +1,5 @@
-local StackFSM = require("util.stack_fsm").StackFSM
+local StackFSM = require("utils.stack_fsm").StackFSM
+local EventEmitter = require("events").EventEmitter
 local CONTINOUSE_MOTION_IDS = {
   idl = true,
   ded = true,
@@ -20,16 +21,21 @@ do
     getCurrentMotion = function(self)
       return self:getCurrentState()
     end,
-    applyChange = function(self)
+    onStackFSMUpdate = function(self, motionId)
+      console.info("[character::onStackFSMUpdate] motionId:" .. tostring(motionId))
+      self:applyChange(motionId)
+    end,
+    applyChange = function(self, curMotion)
       if not (self.sprite) then
         return 
       end
       self.sprite:setFlippedX(DIRECTION_TO_FLIPX[self.curDirection])
-      if self.continouseMotionIds[self.curMotion] then
-        self.figure:playOnSprite(self.sprite, self:getCurrentMotion(), self.curDirection)
+      curMotion = curMotion or self:getCurrentMotion()
+      if CONTINOUSE_MOTION_IDS[curMotion] then
+        self.figure:playOnSprite(self.sprite, curMotion, self.curDirection)
         return 
       end
-      self.figure:playOnceOnSprite(self.sprite, self:getCurrentMotion(), self.curDirection)
+      self.figure:playOnceOnSprite(self.sprite, curMotion, self.curDirection)
     end,
     setDirection = function(self, value)
       if self.curDirection == value then
@@ -56,7 +62,8 @@ do
       self.id, self.figure, self.sprite = id, figure, sprite
       self.curDirection = "s"
       StackFSM(self)
-      return self:pushState("idl"):updateState()
+      self:pushState("idl")
+      self:updateState()
     end,
     __base = _base_0,
     __name = "Character"
