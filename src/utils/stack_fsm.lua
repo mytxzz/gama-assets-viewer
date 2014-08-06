@@ -17,6 +17,7 @@ pushState = function(self, state, allowDuplication)
     return print("[stack_fsm::pushState] invalid stack_fsm:" .. tostring(self))
   end
   table.insert(states, state)
+  return self
 end
 local getCurrentState
 getCurrentState = function(self)
@@ -42,12 +43,14 @@ updateState = function(self, self)
   elseif type(self["on" .. tostring(currentState)]) == "function" then
     self["on" .. tostring(currentState)](self)
   end
+  return self
 end
 local resetState
 resetState = function(self, state)
-  return rawset(self, IDENTIFIER, {
+  rawset(self, IDENTIFIER, {
     state
   })
+  return self
 end
 return {
   StackFSM = function(tbl)

@@ -15,7 +15,7 @@ pushState = (state, allowDuplication)=>
   states = rawget @, IDENTIFIER
   return print "[stack_fsm::pushState] invalid stack_fsm:#{@}" unless type(states) == "table"
   table.insert states, state
-  return
+  return @        -- chainalbe
 
 --- 返回当前状态
 getCurrentState = =>
@@ -38,11 +38,12 @@ updateState = (self)=>
   elseif type(self["on#{currentState}"]) == "function"
     -- 如果 self 上有 on 事件监听方法，那么调用这个事件监听方法
     self["on#{currentState}"](self)
-
-  return
+  return @        -- chainalbe
 
 -- 重设状态
-resetState = (state)=> rawset @, IDENTIFIER, {state}
+resetState = (state)=>
+  rawset @, IDENTIFIER, {state}
+  return @        -- chainalbe
 
 return {
   -- 向给定的 table 注入 Stack Finity State Machine 功能，如果没有提给定的 table 那么会创建一个新 table
