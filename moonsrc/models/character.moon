@@ -5,6 +5,7 @@ CONTINOUSE_MOTION_IDS =
   idl: true
   ded: true
   run: true
+  eng: true
 
 -- TODO: following conts should goes into gama
 DIRECTION_TO_FLIPX =
@@ -47,13 +48,17 @@ class Character
 
     if CONTINOUSE_MOTION_IDS[curMotion]
       @figure\playOnSprite @sprite, curMotion, @curDirection
-      return
-
-    @figure\playOnceOnSprite @sprite, curMotion, @curDirection
+    else
+      @figure\playOnceOnSprite @sprite, curMotion, @curDirection, ->
+        console.info "[character::playOnceOnSprite] callback"
+        self\popState!
+        self\updateState!
+        return
     return
 
   setDirection: (value)=>
     return if @curDirection == value  --lazy
+    return unless CONTINOUSE_MOTION_IDS[@getCurrentMotion!] == true
     @curDirection = value
     @applyChange!
     return

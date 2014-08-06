@@ -3,7 +3,8 @@ local EventEmitter = require("events").EventEmitter
 local CONTINOUSE_MOTION_IDS = {
   idl = true,
   ded = true,
-  run = true
+  run = true,
+  eng = true
 }
 local DIRECTION_TO_FLIPX = {
   n = false,
@@ -33,12 +34,19 @@ do
       curMotion = curMotion or self:getCurrentMotion()
       if CONTINOUSE_MOTION_IDS[curMotion] then
         self.figure:playOnSprite(self.sprite, curMotion, self.curDirection)
-        return 
+      else
+        self.figure:playOnceOnSprite(self.sprite, curMotion, self.curDirection, function()
+          console.info("[character::playOnceOnSprite] callback")
+          self:popState()
+          self:updateState()
+        end)
       end
-      self.figure:playOnceOnSprite(self.sprite, curMotion, self.curDirection)
     end,
     setDirection = function(self, value)
       if self.curDirection == value then
+        return 
+      end
+      if not (CONTINOUSE_MOTION_IDS[self:getCurrentMotion()] == true) then
         return 
       end
       self.curDirection = value
