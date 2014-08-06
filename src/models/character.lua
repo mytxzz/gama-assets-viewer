@@ -1,4 +1,4 @@
-local StackFSM = require("utils.stack_fsm").StackFSM
+local StackFSM = require("stack_fsm").StackFSM
 local EventEmitter = require("events").EventEmitter
 local CONTINOUSE_MOTION_IDS = {
   idl = true,

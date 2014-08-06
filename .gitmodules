@@ -13,3 +13,6 @@
 [submodule "src/vendor/events.lua"]
 	path = src/vendor/events.lua
 	url = git@github.com:yi/events.lua.git
+[submodule "src/vendor/stackstatemachine.lua"]
+	path = src/vendor/stackstatemachine.lua
+	url = git@github.com:GamaLabs/stackstatemachine.lua.git

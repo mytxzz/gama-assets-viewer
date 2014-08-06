@@ -1,4 +1,4 @@
-StackFSM = require("utils.stack_fsm").StackFSM
+StackFSM = require("stack_fsm").StackFSM
 EventEmitter = require("events").EventEmitter
 
 CONTINOUSE_MOTION_IDS =
