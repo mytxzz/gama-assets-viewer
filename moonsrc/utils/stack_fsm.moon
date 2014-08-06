@@ -1,24 +1,30 @@
 
 IDENTIFIER = "__stack_fsm"
 
+--- 移除最新的栈状态
 popState = =>
   states = rawget @, IDENTIFIER
   return print "[stack_fsm::pushState] invalid stack_fsm:#{@}" unless type(states) == "table"
   return table.remove states
 
-pushState = (state)=>
-  return if state == @getCurrentState!
+--- 移除最新的栈状态
+-- @param {anything} state, 状态，可以是字符串(事件名)、方法（会被执行）
+-- @param {boolean} allowDuplication, 当 true 时，即便当前状态就是所要添加进入的状态的话，也会继续添加新状态
+pushState = (state, allowDuplication)=>
+  return if (not allowDuplication) and state == @getCurrentState!
   states = rawget @, IDENTIFIER
   return print "[stack_fsm::pushState] invalid stack_fsm:#{@}" unless type(states) == "table"
   table.insert states, state
   return
 
+--- 返回当前状态
 getCurrentState = =>
   states = rawget @, IDENTIFIER
   return print "[stack_fsm::pushState] invalid stack_fsm:#{@}" unless type(states) == "table"
   return nil unless #states > 0
   return states[#states]
 
+--- 执行当前状态
 updateState = (self)=>
   currentState = self.getCurrentState!
   return if currentState == nil
@@ -35,6 +41,7 @@ updateState = (self)=>
 
   return
 
+-- 重设状态
 resetState = (state)=> rawset @, IDENTIFIER, {state}
 
 return {

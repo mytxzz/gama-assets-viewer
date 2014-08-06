@@ -8,8 +8,8 @@ popState = function(self)
   return table.remove(states)
 end
 local pushState
-pushState = function(self, state)
-  if state == self:getCurrentState() then
+pushState = function(self, state, allowDuplication)
+  if (not allowDuplication) and state == self:getCurrentState() then
     return 
   end
   local states = rawget(self, IDENTIFIER)
