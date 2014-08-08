@@ -6,6 +6,10 @@ local CONTINOUSE_MOTION_IDS = {
   run = true,
   eng = true
 }
+local STACKABLE_MOTION_IDS = {
+  atk = true,
+  ak2 = true
+}
 local DIRECTION_TO_FLIPX = {
   n = false,
   ne = false,
@@ -58,10 +62,19 @@ do
       end
       if CONTINOUSE_MOTION_IDS[value] then
         self:resetState(value)
+        self:updateState()
       else
-        self:pushState(value, allowDuplication)
+        if STACKABLE_MOTION_IDS[value] then
+          local currentState = self:getCurrentMotion()
+          self:pushState(value, true)
+          if value ~= currentState then
+            self:updateState()
+          end
+        else
+          self:pushState(value, false)
+          self:updateState()
+        end
       end
-      self:updateState()
     end
   }
   _base_0.__index = _base_0

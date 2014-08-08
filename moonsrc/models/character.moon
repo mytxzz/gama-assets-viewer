@@ -7,6 +7,10 @@ CONTINOUSE_MOTION_IDS =
   run: true
   eng: true
 
+STACKABLE_MOTION_IDS =
+  atk: true
+  ak2: true
+
 -- TODO: following conts should goes into gama
 DIRECTION_TO_FLIPX =
   n: false
@@ -65,12 +69,20 @@ class Character
 
   setMotion: (value, allowDuplication)=>
     return if value == nil
+
     if CONTINOUSE_MOTION_IDS[value]
       @resetState value   -- 持续式的状态
+      @updateState!
     else
-      @pushState value, allowDuplication
+      if STACKABLE_MOTION_IDS[value]
+        -- 是可以多栈的动作
+        currentState = @getCurrentMotion!
+        @pushState value, true
+        @updateState! if value != currentState
+      else
+        @pushState value, false
+        @updateState!
 
-    @updateState!
     return
 
 return Character
