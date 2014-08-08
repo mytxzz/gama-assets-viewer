@@ -16,3 +16,6 @@
 [submodule "src/vendor/stackstatemachine.lua"]
 	path = src/vendor/stackstatemachine.lua
 	url = git@github.com:GamaLabs/stackstatemachine.lua.git
+[submodule "src/vendor/vector.lua"]
+	path = src/vendor/vector.lua
+	url = git@github.com:GamaLabs/vector.lua.git
