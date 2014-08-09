@@ -1,5 +1,8 @@
 StackFSM = require("stack_fsm").StackFSM
 EventEmitter = require("events").EventEmitter
+Vector = require "vector"
+
+scheduler = cc.Director\getInstance()\getScheduler()
 
 CONTINOUSE_MOTION_IDS =
   idl: true
@@ -22,16 +25,23 @@ DIRECTION_TO_FLIPX =
   w: true
   nw: true
 
+MOTION_ID_TO_SCALAR =
+  idl: 0.1
+  ded: 0.1
+  run: 3
+  eng: 0.1
+  atk: 1
+  ak2: 2
+  kik: 1
+  nkd: 3
+
+
 class Character
 
   new: (@id, @figure, @sprite)=>
     @curDirection = "s"
-
-    --EventEmitter(@) -- 把自己变成一个事件触发器
-    --@on "stack_fsm_update", (motionId)->
-      --console.info "[character::stack_fsm_update] motionId:#{motionId}"
-
     StackFSM(@)     -- 把自己变成一个多堆式状态机
+    @velocity = Vector.new(0, 0)
     @pushState("idl")
     @updateState!
     return

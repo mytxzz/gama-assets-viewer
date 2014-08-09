@@ -1,5 +1,7 @@
 local StackFSM = require("stack_fsm").StackFSM
 local EventEmitter = require("events").EventEmitter
+local Vector = require("vector")
+local scheduler = cc.Director:getInstance():getScheduler()
 local CONTINOUSE_MOTION_IDS = {
   idl = true,
   ded = true,
@@ -19,6 +21,16 @@ local DIRECTION_TO_FLIPX = {
   sw = true,
   w = true,
   nw = true
+}
+local MOTION_ID_TO_SCALAR = {
+  idl = 0.1,
+  ded = 0.1,
+  run = 3,
+  eng = 0.1,
+  atk = 1,
+  ak2 = 2,
+  kik = 1,
+  nkd = 3
 }
 local Character
 do
@@ -83,6 +95,7 @@ do
       self.id, self.figure, self.sprite = id, figure, sprite
       self.curDirection = "s"
       StackFSM(self)
+      self.velocity = Vector.new(0, 0)
       self:pushState("idl")
       self:updateState()
     end,
