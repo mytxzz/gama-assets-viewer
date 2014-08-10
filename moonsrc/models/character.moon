@@ -44,17 +44,13 @@ positionSpriteOnScreen = (sprite, ...)->
 
 
 makeMovement = ->
-  console.info "[character::makeMovement]"
+  --console.info "[character::makeMovement]"
   for character in pairs CHARACTER_INSTANCES
-    console.warn "[character::makeMovement] character:#{character}"
     velocity = character.velocity
-    if velocity == nil
-      print "[character::makeMovement] invalid Character:#{character}"
-    elseif velocity\insignificant!
-      print "[character::makeMovement] ignore insignificant Character:#{character}"
-    else
+    --console.warn "[character::makeMovement] character:#{character}, velocity:#{velocity}"
+    if Vector.isvector(velocity) and velocity\significant!
+      --console.info "[character::makeMovement] apply velocity:#{velocity}"
       character\setLocation(character.x + velocity.x, character.y + velocity.y)
-
   return
 
 scheduler\scheduleScriptFunc(makeMovement,0,false)
@@ -64,10 +60,11 @@ class Character
   new: (@id, @figure)=>
     CHARACTER_INSTANCES[@] = true     -- register instance to instance list
     StackFSM(@)     -- 把自己变成一个多堆式状态机
-    @velocity = Vector.new(0, 0)    -- 变更位置和方向的向量
+    @velocity = Vector.new(0, 0.1)-- 变更位置和方向的向量
     @setMotion "idl"
     @x = 0
     @y = 0
+
     return
 
   __tostring: => "[Character #{@id}, x:#{@x}, y:#{@y}]"

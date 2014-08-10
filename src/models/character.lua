@@ -42,15 +42,9 @@ positionSpriteOnScreen = function(sprite, ...)
 end
 local makeMovement
 makeMovement = function()
-  console.info("[character::makeMovement]")
   for character in pairs(CHARACTER_INSTANCES) do
-    console.warn("[character::makeMovement] character:" .. tostring(character))
     local velocity = character.velocity
-    if velocity == nil then
-      print("[character::makeMovement] invalid Character:" .. tostring(character))
-    elseif velocity:insignificant() then
-      print("[character::makeMovement] ignore insignificant Character:" .. tostring(character))
-    else
+    if Vector.isvector(velocity) and velocity:significant() then
       character:setLocation(character.x + velocity.x, character.y + velocity.y)
     end
   end
@@ -144,7 +138,7 @@ do
       self.id, self.figure = id, figure
       CHARACTER_INSTANCES[self] = true
       StackFSM(self)
-      self.velocity = Vector.new(0, 0)
+      self.velocity = Vector.new(0, 0.1)
       self:setMotion("idl")
       self.x = 0
       self.y = 0
