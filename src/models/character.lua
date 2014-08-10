@@ -34,13 +34,17 @@ local MOTION_ID_TO_SCALAR = {
 }
 local CHARACTER_INSTANCES = { }
 local positionSpriteOnScreen
-positionSpriteOnScreen = function(sprite)
-  return print("[character::positionSpriteOnScreen] sprite:" .. tostring(sprite))
+positionSpriteOnScreen = function(sprite, ...)
+  print("[character::positionSpriteOnScreen] sprite:" .. tostring(sprite))
+  return console.dir({
+    ...
+  })
 end
 local makeMovement
 makeMovement = function()
-  for _index_0 = 1, #CHARACTER_INSTANCES do
-    local character = CHARACTER_INSTANCES[_index_0]
+  console.info("[character::makeMovement]")
+  for character in pairs(CHARACTER_INSTANCES) do
+    console.warn("[character::makeMovement] character:" .. tostring(character))
     local velocity = character.velocity
     if velocity == nil then
       print("[character::makeMovement] invalid Character:" .. tostring(character))
@@ -55,13 +59,18 @@ scheduler:scheduleScriptFunc(makeMovement, 0, false)
 local Character
 do
   local _base_0 = {
-    __tostring = function()
-      return "[Character " .. tostring(self.id) .. ", x:" .. tostring(self.x) .. ", y:" .. tostring(y) .. "]"
+    __tostring = function(self)
+      return "[Character " .. tostring(self.id) .. ", x:" .. tostring(self.x) .. ", y:" .. tostring(self.y) .. "]"
     end,
     getCurrentMotion = function(self)
       return self:getCurrentState()
     end,
-    bindToDisplay = function(sprite)
+    setLocation = function(self, x, y)
+      console.info("[character::setLocation] x:" .. tostring(x) .. ", y:" .. tostring(y))
+      self.x = x
+      self.y = y
+    end,
+    bindToDisplay = function(self, sprite)
       if self.sprite then
         print("[character::bindToDisplay] should remove action")
       end
@@ -69,7 +78,10 @@ do
         return 
       end
       self.sprite = sprite
-      sprite:scheduleUpdateWithPriorityLua(positionSpriteOnScreen, 1)
+      self:applyChange()
+      sprite:scheduleUpdateWithPriorityLua((function()
+        return sprite:setPosition(300, 300)
+      end), 1)
     end,
     onStackFSMUpdate = function(self, motionId)
       console.info("[character::onStackFSMUpdate] motionId:" .. tostring(motionId))
@@ -98,7 +110,7 @@ do
         end)
       end
     end,
-    rotateTo = function(radians)
+    rotateTo = function(self, radians)
       self.velocity:rotateTo(radians)
       local curDirection = self.velocity:toDirection()
       if CONTINOUSE_MOTION_IDS[curDirection] ~= true then
@@ -134,6 +146,8 @@ do
       StackFSM(self)
       self.velocity = Vector.new(0, 0)
       self:setMotion("idl")
+      self.x = 0
+      self.y = 0
     end,
     __base = _base_0,
     __name = "Character"

@@ -31,7 +31,9 @@ create = function(gamaFigure)
   local ypos = display.height / 3
   local sprite = cc.Sprite:create()
   sprite:setPosition(xpos, ypos)
-  local character = Character(gamaFigure:getId(), gamaFigure, sprite)
+  local character = Character(gamaFigure:getId(), gamaFigure)
+  character:bindToDisplay(sprite)
+  character:setLocation(display.cx, display.cy)
   print("[show_figure_scene] character:" .. tostring(character))
   local accumenDeltaX = 0
   local layer = view_helper.createTouchMoveLayer(function(touches, event)

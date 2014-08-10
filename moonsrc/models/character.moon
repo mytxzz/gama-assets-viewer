@@ -38,11 +38,15 @@ MOTION_ID_TO_SCALAR =
 
 CHARACTER_INSTANCES = {}
 
-positionSpriteOnScreen = (sprite)->
+positionSpriteOnScreen = (sprite, ...)->
   print "[character::positionSpriteOnScreen] sprite:#{sprite}"
+  console.dir {...}
+
 
 makeMovement = ->
-  for character in * CHARACTER_INSTANCES
+  console.info "[character::makeMovement]"
+  for character in pairs CHARACTER_INSTANCES
+    console.warn "[character::makeMovement] character:#{character}"
     velocity = character.velocity
     if velocity == nil
       print "[character::makeMovement] invalid Character:#{character}"
@@ -62,22 +66,30 @@ class Character
     StackFSM(@)     -- 把自己变成一个多堆式状态机
     @velocity = Vector.new(0, 0)    -- 变更位置和方向的向量
     @setMotion "idl"
+    @x = 0
+    @y = 0
     return
 
-  __tostring: -> "[Character #{@id}, x:#{@x}, y:#{y}]"
+  __tostring: => "[Character #{@id}, x:#{@x}, y:#{@y}]"
 
   getCurrentMotion: => @getCurrentState!
 
+  setLocation: (x, y)=>
+    console.info "[character::setLocation] x:#{x}, y:#{y}"
+    @x = x
+    @y = y
+    return
 
   -- 绑定到显示容器上
-  bindToDisplay: (sprite)->
+  bindToDisplay: (sprite)=>
     if @sprite
       -- TODO: 移除当前的绑定
       print "[character::bindToDisplay] should remove action"
 
     return unless sprite
     @sprite = sprite
-    sprite\scheduleUpdateWithPriorityLua positionSpriteOnScreen, 1
+    @applyChange!
+    sprite\scheduleUpdateWithPriorityLua((-> sprite\setPosition(300,300)), 1)
     return
 
 
@@ -113,7 +125,7 @@ class Character
         return
     return
 
-  rotateTo: (radians)->
+  rotateTo: (radians)=>
     @velocity\rotateTo radians
     curDirection = @velocity\toDirection!
     @applyChange!  if CONTINOUSE_MOTION_IDS[curDirection] != true

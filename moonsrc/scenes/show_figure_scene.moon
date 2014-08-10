@@ -41,7 +41,9 @@ create = (gamaFigure) ->
   sprite = cc.Sprite\create!
   sprite\setPosition(xpos, ypos)
   --gamaFigure\playOnSprite sprite
-  character = Character(gamaFigure\getId!, gamaFigure, sprite)
+  character = Character(gamaFigure\getId!, gamaFigure)
+  character\bindToDisplay(sprite)
+  character\setLocation(display.cx, display.cy)
   --character\addContinouseMotionId "ded", "run"
   print "[show_figure_scene] character:#{character}"
 
