@@ -38,6 +38,9 @@ MOTION_ID_TO_SCALAR =
 
 CHARACTER_INSTANCES = {}
 
+positionSpriteOnScreen = (sprite)->
+  print "[character::positionSpriteOnScreen] sprite:#{sprite}"
+
 makeMovement = ->
   for character in * CHARACTER_INSTANCES
     velocity = character.velocity
@@ -54,19 +57,29 @@ scheduler\scheduleScriptFunc(makeMovement,0,false)
 
 class Character
 
-  new: (@id, @figure, @sprite)=>
+  new: (@id, @figure)=>
     CHARACTER_INSTANCES[@] = true     -- register instance to instance list
-    --@curDirection = "s"
     StackFSM(@)     -- 把自己变成一个多堆式状态机
     @velocity = Vector.new(0, 0)    -- 变更位置和方向的向量
-    --@pushState("idl")
-    --@updateState!
     @setMotion "idl"
     return
 
   __tostring: -> "[Character #{@id}, x:#{@x}, y:#{y}]"
 
   getCurrentMotion: => @getCurrentState!
+
+
+  -- 绑定到显示容器上
+  bindToDisplay: (sprite)->
+    if @sprite
+      -- TODO: 移除当前的绑定
+      print "[character::bindToDisplay] should remove action"
+
+    return unless sprite
+    @sprite = sprite
+    sprite\scheduleUpdateWithPriorityLua positionSpriteOnScreen, 1
+    return
+
 
   -- 当前动作被切换的时候
   onStackFSMUpdate: (motionId)=>
@@ -99,14 +112,6 @@ class Character
         self\updateState!
         return
     return
-
-  --setDirection: (value)=>
-    --return if @curDirection == value  --lazy
-    --return unless CONTINOUSE_MOTION_IDS[@getCurrentMotion!] == true
-    --@curDirection = value
-    --@applyChange!
-    --return
-
 
   rotateTo: (radians)->
     @velocity\rotateTo radians

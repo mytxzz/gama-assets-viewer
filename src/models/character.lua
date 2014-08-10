@@ -33,6 +33,10 @@ local MOTION_ID_TO_SCALAR = {
   nkd = 3
 }
 local CHARACTER_INSTANCES = { }
+local positionSpriteOnScreen
+positionSpriteOnScreen = function(sprite)
+  return print("[character::positionSpriteOnScreen] sprite:" .. tostring(sprite))
+end
 local makeMovement
 makeMovement = function()
   for _index_0 = 1, #CHARACTER_INSTANCES do
@@ -56,6 +60,16 @@ do
     end,
     getCurrentMotion = function(self)
       return self:getCurrentState()
+    end,
+    bindToDisplay = function(sprite)
+      if self.sprite then
+        print("[character::bindToDisplay] should remove action")
+      end
+      if not (sprite) then
+        return 
+      end
+      self.sprite = sprite
+      sprite:scheduleUpdateWithPriorityLua(positionSpriteOnScreen, 1)
     end,
     onStackFSMUpdate = function(self, motionId)
       console.info("[character::onStackFSMUpdate] motionId:" .. tostring(motionId))
@@ -114,8 +128,8 @@ do
   }
   _base_0.__index = _base_0
   local _class_0 = setmetatable({
-    __init = function(self, id, figure, sprite)
-      self.id, self.figure, self.sprite = id, figure, sprite
+    __init = function(self, id, figure)
+      self.id, self.figure = id, figure
       CHARACTER_INSTANCES[self] = true
       StackFSM(self)
       self.velocity = Vector.new(0, 0)
