@@ -56,9 +56,9 @@ create = (gamaFigure) ->
     return unless math.abs(accumenDeltaX) > 10
 
     if accumenDeltaX < 0
-      character\setDirection(DIRECTION_TO_NEXT_CLOCKWISE[character\getCurDirection!])
+      character\rotate(math.pi / 8)
     else
-      character\setDirection(DIRECTION_TO_NEXT_ANTICLOCKWISE[character\getCurDirection!])
+      character\rotate(-math.pi / 8)
 
     accumenDeltaX = 0
     return

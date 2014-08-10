@@ -43,9 +43,9 @@ create = function(gamaFigure)
       return 
     end
     if accumenDeltaX < 0 then
-      character:setDirection(DIRECTION_TO_NEXT_CLOCKWISE[character:getCurDirection()])
+      character:rotate(math.pi / 8)
     else
-      character:setDirection(DIRECTION_TO_NEXT_ANTICLOCKWISE[character:getCurDirection()])
+      character:rotate(-math.pi / 8)
     end
     accumenDeltaX = 0
   end)

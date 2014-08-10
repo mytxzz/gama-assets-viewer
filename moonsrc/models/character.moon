@@ -30,27 +30,32 @@ MOTION_ID_TO_SCALAR =
   ded: 0.1
   run: 3
   eng: 0.1
-  atk: 1
-  ak2: 2
+  atk: 0.3
+  ak2: 1
   kik: 1
-  nkd: 3
+  nkd: 0.1
 
 
 CHARACTER_INSTANCES = {}
 
-positionSpriteOnScreen = (sprite, ...)->
-  print "[character::positionSpriteOnScreen] sprite:#{sprite}"
-  console.dir {...}
-
-
-makeMovement = ->
-  --console.info "[character::makeMovement]"
+-- 每帧移动向量
+makeMovement = (delta)->
+  --console.info "[character::makeMovement] delta:#{delta}"
   for character in pairs CHARACTER_INSTANCES
     velocity = character.velocity
     --console.warn "[character::makeMovement] character:#{character}, velocity:#{velocity}"
     if Vector.isvector(velocity) and velocity\significant!
       --console.info "[character::makeMovement] apply velocity:#{velocity}"
-      character\setLocation(character.x + velocity.x, character.y + velocity.y)
+      newX = character.x + velocity.x
+      newY = character.y + velocity.y
+      newX = display.width + (newX % display.width) if newX < 0
+      newY = display.height + (newX % display.height) if newY < 0
+      newX = 0 if newX > display.width
+      newY = 0 if newY > display.height
+      character\setLocation(newX, newY)
+      character\positionSpriteOnScreen!
+      --if character.sprite
+        --character.sprite\setPosition
   return
 
 scheduler\scheduleScriptFunc(makeMovement,0,false)
@@ -72,7 +77,7 @@ class Character
   getCurrentMotion: => @getCurrentState!
 
   setLocation: (x, y)=>
-    console.info "[character::setLocation] x:#{x}, y:#{y}"
+    --console.info "[character::setLocation] x:#{x}, y:#{y}"
     @x = x
     @y = y
     return
@@ -86,7 +91,20 @@ class Character
     return unless sprite
     @sprite = sprite
     @applyChange!
-    sprite\scheduleUpdateWithPriorityLua((-> sprite\setPosition(300,300)), 1)
+
+    --_this = self
+    --positionSpriteOnScreen = ->
+      --console.info "[character::positionSpriteOnScreen] x:#{_this.x}, y:#{_this.y}, sprite:#{_this.sprite}"
+      --_this.sprite\setPosition(_this.x, _this.y)
+      --return
+
+    --sprite\scheduleUpdateWithPriorityLua(positionSpriteOnScreen, 1)
+    return
+
+  positionSpriteOnScreen: =>
+    console.info "[character::positionSpriteOnScreen] x:#{@x}, y:#{@y}, sprite:#{@sprite}"
+    return unless @sprite
+    @sprite\setPosition(@x, @y)
     return
 
 
@@ -120,6 +138,12 @@ class Character
         self\popState!
         self\updateState!
         return
+    return
+
+  rotate: (radians)=>
+    @velocity\rotate radians
+    curDirection = @velocity\toDirection!
+    @applyChange!  if CONTINOUSE_MOTION_IDS[curDirection] != true
     return
 
   rotateTo: (radians)=>
