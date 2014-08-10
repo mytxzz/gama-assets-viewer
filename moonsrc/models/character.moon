@@ -36,45 +36,82 @@ MOTION_ID_TO_SCALAR =
   nkd: 3
 
 
+CHARACTER_INSTANCES = {}
+
+makeMovement = ->
+  for character in * CHARACTER_INSTANCES
+    velocity = character.velocity
+    if velocity == nil
+      print "[character::makeMovement] invalid Character:#{character}"
+    elseif velocity\insignificant!
+      print "[character::makeMovement] ignore insignificant Character:#{character}"
+    else
+      character\setLocation(character.x + velocity.x, character.y + velocity.y)
+
+  return
+
+scheduler\scheduleScriptFunc(makeMovement,0,false)
+
 class Character
 
   new: (@id, @figure, @sprite)=>
-    @curDirection = "s"
+    CHARACTER_INSTANCES[@] = true     -- register instance to instance list
+    --@curDirection = "s"
     StackFSM(@)     -- 把自己变成一个多堆式状态机
-    @velocity = Vector.new(0, 0)
-    @pushState("idl")
-    @updateState!
+    @velocity = Vector.new(0, 0)    -- 变更位置和方向的向量
+    --@pushState("idl")
+    --@updateState!
+    @setMotion "idl"
     return
+
+  __tostring: -> "[Character #{@id}, x:#{@x}, y:#{y}]"
 
   getCurrentMotion: => @getCurrentState!
 
+  -- 当前动作被切换的时候
   onStackFSMUpdate: (motionId)=>
     console.info "[character::onStackFSMUpdate] motionId:#{motionId}"
+
+    scalar = MOTION_ID_TO_SCALAR[motionId]
+    unless scalar > 0
+      print "[character::onStackFSMUpdate] invalid motion id:#{motionId}"
+      return
+
+    @velocity\setScalar(scalar)
     @applyChange(motionId)
     return
 
   applyChange: (curMotion)=>
     return unless @sprite
 
-    @sprite\setFlippedX(DIRECTION_TO_FLIPX[@curDirection])
+    curDirection = @velocity\toDirection!
+
+    @sprite\setFlippedX(DIRECTION_TO_FLIPX[curDirection])
 
     curMotion = curMotion or @getCurrentMotion!
 
     if CONTINOUSE_MOTION_IDS[curMotion]
-      @figure\playOnSprite @sprite, curMotion, @curDirection
+      @figure\playOnSprite @sprite, curMotion, curDirection
     else
-      @figure\playOnceOnSprite @sprite, curMotion, @curDirection, ->
+      @figure\playOnceOnSprite @sprite, curMotion, curDirection, ->
         console.info "[character::playOnceOnSprite] callback"
         self\popState!
         self\updateState!
         return
     return
 
-  setDirection: (value)=>
-    return if @curDirection == value  --lazy
-    return unless CONTINOUSE_MOTION_IDS[@getCurrentMotion!] == true
-    @curDirection = value
-    @applyChange!
+  --setDirection: (value)=>
+    --return if @curDirection == value  --lazy
+    --return unless CONTINOUSE_MOTION_IDS[@getCurrentMotion!] == true
+    --@curDirection = value
+    --@applyChange!
+    --return
+
+
+  rotateTo: (radians)->
+    @velocity\rotateTo radians
+    curDirection = @velocity\toDirection!
+    @applyChange!  if CONTINOUSE_MOTION_IDS[curDirection] != true
     return
 
   setMotion: (value, allowDuplication)=>

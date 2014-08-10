@@ -32,41 +32,64 @@ local MOTION_ID_TO_SCALAR = {
   kik = 1,
   nkd = 3
 }
+local CHARACTER_INSTANCES = { }
+local makeMovement
+makeMovement = function()
+  for _index_0 = 1, #CHARACTER_INSTANCES do
+    local character = CHARACTER_INSTANCES[_index_0]
+    local velocity = character.velocity
+    if velocity == nil then
+      print("[character::makeMovement] invalid Character:" .. tostring(character))
+    elseif velocity:insignificant() then
+      print("[character::makeMovement] ignore insignificant Character:" .. tostring(character))
+    else
+      character:setLocation(character.x + velocity.x, character.y + velocity.y)
+    end
+  end
+end
+scheduler:scheduleScriptFunc(makeMovement, 0, false)
 local Character
 do
   local _base_0 = {
+    __tostring = function()
+      return "[Character " .. tostring(self.id) .. ", x:" .. tostring(self.x) .. ", y:" .. tostring(y) .. "]"
+    end,
     getCurrentMotion = function(self)
       return self:getCurrentState()
     end,
     onStackFSMUpdate = function(self, motionId)
       console.info("[character::onStackFSMUpdate] motionId:" .. tostring(motionId))
+      local scalar = MOTION_ID_TO_SCALAR[motionId]
+      if not (scalar > 0) then
+        print("[character::onStackFSMUpdate] invalid motion id:" .. tostring(motionId))
+        return 
+      end
+      self.velocity:setScalar(scalar)
       self:applyChange(motionId)
     end,
     applyChange = function(self, curMotion)
       if not (self.sprite) then
         return 
       end
-      self.sprite:setFlippedX(DIRECTION_TO_FLIPX[self.curDirection])
+      local curDirection = self.velocity:toDirection()
+      self.sprite:setFlippedX(DIRECTION_TO_FLIPX[curDirection])
       curMotion = curMotion or self:getCurrentMotion()
       if CONTINOUSE_MOTION_IDS[curMotion] then
-        self.figure:playOnSprite(self.sprite, curMotion, self.curDirection)
+        self.figure:playOnSprite(self.sprite, curMotion, curDirection)
       else
-        self.figure:playOnceOnSprite(self.sprite, curMotion, self.curDirection, function()
+        self.figure:playOnceOnSprite(self.sprite, curMotion, curDirection, function()
           console.info("[character::playOnceOnSprite] callback")
           self:popState()
           self:updateState()
         end)
       end
     end,
-    setDirection = function(self, value)
-      if self.curDirection == value then
-        return 
+    rotateTo = function(radians)
+      self.velocity:rotateTo(radians)
+      local curDirection = self.velocity:toDirection()
+      if CONTINOUSE_MOTION_IDS[curDirection] ~= true then
+        self:applyChange()
       end
-      if not (CONTINOUSE_MOTION_IDS[self:getCurrentMotion()] == true) then
-        return 
-      end
-      self.curDirection = value
-      self:applyChange()
     end,
     setMotion = function(self, value, allowDuplication)
       if value == nil then
@@ -93,11 +116,10 @@ do
   local _class_0 = setmetatable({
     __init = function(self, id, figure, sprite)
       self.id, self.figure, self.sprite = id, figure, sprite
-      self.curDirection = "s"
+      CHARACTER_INSTANCES[self] = true
       StackFSM(self)
       self.velocity = Vector.new(0, 0)
-      self:pushState("idl")
-      self:updateState()
+      self:setMotion("idl")
     end,
     __base = _base_0,
     __name = "Character"
