@@ -1,6 +1,5 @@
 require("gama")
 local bit = require("bit")
-console.dir(bit)
 local view_helper = require("utils/view_helper")
 local scene = nil
 local COLOR_RED = cc.c4f(1, 0, 0, .5)

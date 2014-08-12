@@ -19,9 +19,10 @@ create = ->
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "8DP12iG" -- animation
-  inputId\setText "8Lowbeq" -- figure
+  --inputId\setText "8Lowbeq" -- figure
   --inputId\setText "3hLQqBp" -- tilemap
   --inputId\setText "EH8H2qZ" -- scene
+  inputId\setText "56PIcLn" -- scene
   scene\addChild inputId
 
   btnView = ccui.Button\create!
@@ -71,8 +72,8 @@ create = ->
         when "scenes"
           gama.scene.loadByCSX csx, (err, sceneDataPack)->
             console.info "[enter_id_scene::loadByCSX]"
-            console.dir err
-            console.dir sceneDataPack
+            --console.dir err
+            --console.dir sceneDataPack
 
             return console.error "ERROR [enter_id_scene::loadScene] fail to load scene:#{id}. error:#{err}" if err
             console.info "[enter_id_scene::loadScene] load scene for id:#{id}"

@@ -2,9 +2,6 @@
 require "gama"
 bit = require "bit"
 
-console.dir bit
-
-
 view_helper = require "utils/view_helper"
 
 scene = nil
