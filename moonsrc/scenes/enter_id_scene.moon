@@ -19,10 +19,10 @@ create = ->
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "8DP12iG" -- animation
-  --inputId\setText "8Lowbeq" -- figure
+  inputId\setText "8Lowbeq" -- figure
   --inputId\setText "3hLQqBp" -- tilemap
   --inputId\setText "EH8H2qZ" -- scene
-  inputId\setText "56PIcLn" -- scene
+  --inputId\setText "56PIcLn" -- scene
   scene\addChild inputId
 
   btnView = ccui.Button\create!

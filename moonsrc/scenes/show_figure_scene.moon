@@ -41,9 +41,13 @@ create = (gamaFigure) ->
   sprite = cc.Sprite\create!
   sprite\setPosition(xpos, ypos)
   --gamaFigure\playOnSprite sprite
-  character = Character(gamaFigure\getId!, gamaFigure)
-  character\bindToDisplay(sprite)
-  character\setLocation(display.cx, display.cy)
+  character = with Character(gamaFigure\getId!, gamaFigure)
+    \bindToDisplay(sprite)
+    \setLocation(display.cx, display.cy)
+
+  sprite\setOpacity 0
+  sprite\runAction(cc.FadeIn\create(3))
+
   --character\addContinouseMotionId "ded", "run"
   print "[show_figure_scene] character:#{character}"
 
@@ -75,7 +79,7 @@ create = (gamaFigure) ->
 
   motions = gamaFigure\getMotions!
 
-  -- add menu items for tests
+ -- add menu items for tests
   LINE_SPACE = 60
   s = cc.Director\getInstance()\getWinSize()
   MainMenu = cc.Menu\create!
