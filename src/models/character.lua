@@ -82,7 +82,6 @@ do
       self:applyChange()
     end,
     positionSpriteOnScreen = function(self)
-      console.info("[character::positionSpriteOnScreen] x:" .. tostring(self.x) .. ", y:" .. tostring(self.y) .. ", sprite:" .. tostring(self.sprite))
       if not (self.sprite) then
         return 
       end
