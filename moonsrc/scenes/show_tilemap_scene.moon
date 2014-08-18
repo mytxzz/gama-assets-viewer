@@ -1,6 +1,4 @@
 
-require "gama"
-
 view_helper = require "utils/view_helper"
 
 scene = nil

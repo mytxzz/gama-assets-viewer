@@ -1,4 +1,3 @@
-require("gama")
 local bit = require("bit")
 local view_helper = require("utils/view_helper")
 local scene = nil

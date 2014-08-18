@@ -1,4 +1,3 @@
-require("gama")
 local scene = nil
 local create
 create = function(gamaAnimation)

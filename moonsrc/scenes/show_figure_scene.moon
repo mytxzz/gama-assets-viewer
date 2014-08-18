@@ -1,5 +1,4 @@
 
-require "gama"
 Character = require "models.character"
 view_helper = require "utils/view_helper"
 

@@ -1,4 +1,3 @@
-require("gama")
 local Character = require("models.character")
 local view_helper = require("utils/view_helper")
 local scene = nil

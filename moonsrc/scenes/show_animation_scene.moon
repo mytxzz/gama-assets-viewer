@@ -1,5 +1,4 @@
 
-require "gama"
 
 scene = nil
 
