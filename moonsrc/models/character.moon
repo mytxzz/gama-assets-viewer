@@ -92,17 +92,10 @@ class Character
     @sprite = sprite
     @applyChange!
 
-    --_this = self
-    --positionSpriteOnScreen = ->
-      --console.info "[character::positionSpriteOnScreen] x:#{_this.x}, y:#{_this.y}, sprite:#{_this.sprite}"
-      --_this.sprite\setPosition(_this.x, _this.y)
-      --return
-
-    --sprite\scheduleUpdateWithPriorityLua(positionSpriteOnScreen, 1)
     return
 
   positionSpriteOnScreen: =>
-    console.info "[character::positionSpriteOnScreen] x:#{@x}, y:#{@y}, sprite:#{@sprite}"
+    --console.info "[character::positionSpriteOnScreen] x:#{@x}, y:#{@y}, sprite:#{@sprite}"
     return unless @sprite
     @sprite\setPosition(@x, @y)
     return

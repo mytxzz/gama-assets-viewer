@@ -20,8 +20,9 @@ create = ->
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "8DP12iG" -- animation
   --inputId\setText "8Lowbeq" -- figure
+  inputId\setText "IT6Jdkm" -- iconpack
   --inputId\setText "3hLQqBp" -- tilemap
-  inputId\setText "EH8H2qZ" -- scene
+  --inputId\setText "EH8H2qZ" -- scene
   --inputId\setText "56PIcLn" -- scene
   scene\addChild inputId
 
@@ -79,8 +80,16 @@ create = ->
             console.info "[enter_id_scene::loadScene] load scene for id:#{id}"
             display.enterScene "scenes.show_scene_scene", {sceneDataPack}
 
+        when "iconpacks"
+          gama.iconpack.loadByCSX csx, (err, gamaIconPack)->
+            console.info "[enter_id_scene::iconpack::loadByCSX] error:#{err}, gamaIconPack:"
+            console.dir gamaIconPack
+
+            return console.error "ERROR [enter_id_scene::loadScene] fail to load iconpack:#{id}. error:#{err}" if err
+            display.enterScene "scenes.show_iconpack_scene", {gamaIconPack}
+
         else
-          console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{assetType}"
+          console.error "ERROR [enter_id_scene::onTap] invalid csx json asset: id:#{id}, assetType:#{csx.type}"
 
 
 

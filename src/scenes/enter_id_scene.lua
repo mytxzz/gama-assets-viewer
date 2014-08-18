@@ -9,7 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("EH8H2qZ")
+  inputId:setText("IT6Jdkm")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")
@@ -70,8 +70,19 @@ create = function()
             sceneDataPack
           })
         end)
+      elseif "iconpacks" == _exp_0 then
+        return gama.iconpack.loadByCSX(csx, function(err, gamaIconPack)
+          console.info("[enter_id_scene::iconpack::loadByCSX] error:" .. tostring(err) .. ", gamaIconPack:")
+          console.dir(gamaIconPack)
+          if err then
+            return console.error("ERROR [enter_id_scene::loadScene] fail to load iconpack:" .. tostring(id) .. ". error:" .. tostring(err))
+          end
+          return display.enterScene("scenes.show_iconpack_scene", {
+            gamaIconPack
+          })
+        end)
       else
-        return console.error("ERROR [enter_id_scene::onTap] invalid csx json asset: id:" .. tostring(id) .. ", assetType:" .. tostring(assetType))
+        return console.error("ERROR [enter_id_scene::onTap] invalid csx json asset: id:" .. tostring(id) .. ", assetType:" .. tostring(csx.type))
       end
     end)
   end)
