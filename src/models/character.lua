@@ -19,7 +19,7 @@ local MOTION_ID_TO_SCALAR = {
   eng = 0.1,
   atk = 0.3,
   ak2 = 1,
-  kik = 1,
+  kik = 0.1,
   nkd = 0.1
 }
 local CHARACTER_INSTANCES = { }

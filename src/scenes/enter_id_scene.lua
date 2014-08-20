@@ -60,7 +60,7 @@ create = function()
         end)
         return 
       elseif "scenes" == _exp_0 then
-        return gama.scene.loadByCSX(csx, function(err, sceneDataPack)
+        return gama.scene.getByCSX(csx, function(err, sceneDataPack)
           console.info("[enter_id_scene::loadByCSX]")
           if err then
             return console.error("ERROR [enter_id_scene::loadScene] fail to load scene:" .. tostring(id) .. ". error:" .. tostring(err))
@@ -71,7 +71,7 @@ create = function()
           })
         end)
       elseif "iconpacks" == _exp_0 then
-        return gama.iconpack.loadByCSX(csx, function(err, gamaIconPack)
+        return gama.iconpack.getByCSX(csx, function(err, gamaIconPack)
           console.info("[enter_id_scene::iconpack::loadByCSX] error:" .. tostring(err) .. ", gamaIconPack:")
           console.dir(gamaIconPack)
           if err then

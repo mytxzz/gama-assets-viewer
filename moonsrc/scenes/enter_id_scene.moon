@@ -72,7 +72,7 @@ create = ->
           return
 
         when "scenes"
-          gama.scene.loadByCSX csx, (err, sceneDataPack)->
+          gama.scene.getByCSX csx, (err, sceneDataPack)->
             console.info "[enter_id_scene::loadByCSX]"
             --console.dir err
             --console.dir sceneDataPack
@@ -82,7 +82,7 @@ create = ->
             display.enterScene "scenes.show_scene_scene", {sceneDataPack}
 
         when "iconpacks"
-          gama.iconpack.loadByCSX csx, (err, gamaIconPack)->
+          gama.iconpack.getByCSX csx, (err, gamaIconPack)->
             console.info "[enter_id_scene::iconpack::loadByCSX] error:#{err}, gamaIconPack:"
             console.dir gamaIconPack
 
@@ -95,33 +95,6 @@ create = ->
 
 
   scene\addChild btnView
-
-
-  --makeRect = (w, h, color)->
-    --node = cc.DrawNode\create!
-    --node\drawSegment(cc.p(0, h), cc.p(w, h), 0.5, color)
-    --node\drawSegment(cc.p(w, 0), cc.p(w, h), 0.5, color)
-    --node\drawSegment(cc.p(0, 0), cc.p(0, h), 0.5, color)
-    --node\drawSegment(cc.p(0, 0), cc.p(w, 0), 0.5, color)
-    --return node
-
-
-  --spRed = makeRect(200, 200, cc.c4f(1,0,0,.5))
-  --spGreen = makeRect(200, 200, cc.c4f(0,1,0,.5))
-  --spBlue = makeRect(200, 200, cc.c4f(0,0,1,.5))
-
-  --spRed\setAnchorPoint(0, 1)
-  --spGreen\setAnchorPoint(1, 1)
-  --spBlue\setAnchorPoint(1, 1)
-
-  --scene\addChild spRed
-  --spRed\addChild spGreen
-
-  --spRed\setPosition 100, 100
-  --spGreen\setPosition 200, 100
-  --spBlue\setPosition 100, 100
-
-
 
   return scene
 
