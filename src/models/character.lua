@@ -12,16 +12,6 @@ local STACKABLE_MOTION_IDS = {
   atk = true,
   ak2 = true
 }
-local DIRECTION_TO_FLIPX = {
-  n = false,
-  ne = false,
-  e = false,
-  se = false,
-  s = false,
-  sw = true,
-  w = true,
-  nw = true
-}
 local MOTION_ID_TO_SCALAR = {
   idl = 0.1,
   ded = 0.1,
@@ -102,7 +92,6 @@ do
         return 
       end
       local curDirection = self.velocity:toDirection()
-      self.sprite:setFlippedX(DIRECTION_TO_FLIPX[curDirection])
       curMotion = curMotion or self:getCurrentMotion()
       if CONTINOUSE_MOTION_IDS[curMotion] then
         self.figure:playOnSprite(self.sprite, curMotion, curDirection)
