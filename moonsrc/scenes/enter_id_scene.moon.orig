@@ -21,7 +21,10 @@ create = ->
   --inputId\setText "8DP12iG" -- animation
   inputId\setText "5IbPnUH" -- figure
   --inputId\setText "8Lowbeq" -- figure
+<<<<<<< HEAD
   inputId\setText "G3whKdI" -- figure
+=======
+>>>>>>> 758b351a214f8fdff4ada12f0743140aad613112
   --inputId\setText "IT6Jdkm" -- iconpack
   --inputId\setText "3hLQqBp" -- tilemap
   --inputId\setText "EH8H2qZ" -- scene

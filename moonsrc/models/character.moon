@@ -14,17 +14,6 @@ STACKABLE_MOTION_IDS =
   atk: true
   ak2: true
 
--- TODO: following conts should goes into gama
-DIRECTION_TO_FLIPX =
-  n: false
-  ne: false
-  e: false
-  se: false
-  s: false
-  sw: true
-  w: true
-  nw: true
-
 MOTION_ID_TO_SCALAR =
   idl: 0.1
   ded: 0.1
@@ -32,7 +21,7 @@ MOTION_ID_TO_SCALAR =
   eng: 0.1
   atk: 0.3
   ak2: 1
-  kik: 1
+  kik: 0.1
   nkd: 0.1
 
 
@@ -118,8 +107,6 @@ class Character
     return unless @sprite
 
     curDirection = @velocity\toDirection!
-
-    @sprite\setFlippedX(DIRECTION_TO_FLIPX[curDirection])
 
     curMotion = curMotion or @getCurrentMotion!
 
