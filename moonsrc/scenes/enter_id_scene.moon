@@ -20,7 +20,8 @@ create = ->
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
   --inputId\setText "8DP12iG" -- animation
   --inputId\setText "8Lowbeq" -- figure
-  inputId\setText "IT6Jdkm" -- iconpack
+  inputId\setText "G3whKdI" -- figure
+  --inputId\setText "IT6Jdkm" -- iconpack
   --inputId\setText "3hLQqBp" -- tilemap
   --inputId\setText "EH8H2qZ" -- scene
   --inputId\setText "56PIcLn" -- scene
@@ -94,33 +95,6 @@ create = ->
 
 
   scene\addChild btnView
-
-
-  --makeRect = (w, h, color)->
-    --node = cc.DrawNode\create!
-    --node\drawSegment(cc.p(0, h), cc.p(w, h), 0.5, color)
-    --node\drawSegment(cc.p(w, 0), cc.p(w, h), 0.5, color)
-    --node\drawSegment(cc.p(0, 0), cc.p(0, h), 0.5, color)
-    --node\drawSegment(cc.p(0, 0), cc.p(w, 0), 0.5, color)
-    --return node
-
-
-  --spRed = makeRect(200, 200, cc.c4f(1,0,0,.5))
-  --spGreen = makeRect(200, 200, cc.c4f(0,1,0,.5))
-  --spBlue = makeRect(200, 200, cc.c4f(0,0,1,.5))
-
-  --spRed\setAnchorPoint(0, 1)
-  --spGreen\setAnchorPoint(1, 1)
-  --spBlue\setAnchorPoint(1, 1)
-
-  --scene\addChild spRed
-  --spRed\addChild spGreen
-
-  --spRed\setPosition 100, 100
-  --spGreen\setPosition 200, 100
-  --spBlue\setPosition 100, 100
-
-
 
   return scene
 
