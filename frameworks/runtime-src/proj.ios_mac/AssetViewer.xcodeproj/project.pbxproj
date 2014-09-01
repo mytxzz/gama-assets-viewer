@@ -113,6 +113,14 @@
 		C03781F518BF65A900FE4F13 /* libluabindings Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03781B418BF654500FE4F13 /* libluabindings Mac.a */; };
 		C03781F618BF65B100FE4F13 /* libluabindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C03781B618BF654500FE4F13 /* libluabindings iOS.a */; };
 		C06E23C418CEF9740093C81A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C06E23C318CEF9740093C81A /* main.cpp */; };
+		CE77165D19B050110005AB32 /* fpconv.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620661984F62200C85D68 /* fpconv.c */; };
+		CE77165E19B050110005AB32 /* fpconv.h in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620671984F62200C85D68 /* fpconv.h */; };
+		CE77165F19B050110005AB32 /* lua_cjson.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620681984F62200C85D68 /* lua_cjson.c */; };
+		CE77166019B050110005AB32 /* lua_cjson.h in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620691984F62200C85D68 /* lua_cjson.h */; };
+		CE77166119B050110005AB32 /* strbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A36206A1984F62200C85D68 /* strbuf.c */; };
+		CE77166219B050110005AB32 /* strbuf.h in Sources */ = {isa = PBXBuildFile; fileRef = 2A36206B1984F62200C85D68 /* strbuf.h */; };
+		CE77166519B0501A0005AB32 /* lpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620AD1984F62200C85D68 /* lpack.c */; };
+		CE77166619B0501A0005AB32 /* lpack.h in Sources */ = {isa = PBXBuildFile; fileRef = 2A3620AE1984F62200C85D68 /* lpack.h */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
@@ -1164,6 +1172,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE77166519B0501A0005AB32 /* lpack.c in Sources */,
+				CE77166619B0501A0005AB32 /* lpack.h in Sources */,
+				CE77165D19B050110005AB32 /* fpconv.c in Sources */,
+				CE77165E19B050110005AB32 /* fpconv.h in Sources */,
+				CE77165F19B050110005AB32 /* lua_cjson.c in Sources */,
+				CE77166019B050110005AB32 /* lua_cjson.h in Sources */,
+				CE77166119B050110005AB32 /* strbuf.c in Sources */,
+				CE77166219B050110005AB32 /* strbuf.h in Sources */,
 				5023812517EBBCAC00990C9B /* RootViewController.mm in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
 				5023812417EBBCAC00990C9B /* main.m in Sources */,

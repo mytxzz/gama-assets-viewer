@@ -1,7 +1,9 @@
 local view_helper = require("utils/view_helper")
 local scene = nil
 local create
-create = function(gamaTilemap)
+create = function(gamaTilemap, csx)
+  console.dir(csx)
+  print("-------------------show_tilemap_scene.moon----------")
   print("[show_animation_scene::create] gamaTilemap:" .. tostring(gamaTilemap))
   scene = cc.Scene:create()
   assert(gamaTilemap, "missing data instance to play on.")

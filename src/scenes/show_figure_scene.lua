@@ -22,7 +22,9 @@ local DIRECTION_TO_NEXT_ANTICLOCKWISE = {
   ne = "n"
 }
 local create
-create = function(gamaFigure)
+create = function(gamaFigure, csx)
+  console.dir(csx)
+  print("-------------------show_figure_scene.moon----------")
   print("[show_animation_scene::create] gamaFigure:" .. tostring(gamaFigure))
   scene = cc.Scene:create()
   assert(gamaFigure, "missing figure instance to play on.")

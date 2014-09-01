@@ -1,6 +1,8 @@
 local scene = nil
 local create
-create = function(gamaAnimation)
+create = function(gamaAnimation, csx)
+  console.dir(csx)
+  print("-------------------show_animation_scene.moon----------")
   print("[show_animation_scene::create] gamaAnimation:" .. tostring(gamaAnimation))
   scene = cc.Scene:create()
   assert(gamaAnimation, "missing animation userdata to play on.")

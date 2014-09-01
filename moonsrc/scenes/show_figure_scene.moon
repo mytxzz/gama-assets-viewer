@@ -25,7 +25,10 @@ DIRECTION_TO_NEXT_ANTICLOCKWISE =
   e: "ne"
   ne: "n"
 
-create = (gamaFigure) ->
+create = (gamaFigure,csx) ->
+
+  console.dir csx
+  print("-------------------show_figure_scene.moon----------")
 
   print "[show_animation_scene::create] gamaFigure:#{gamaFigure}"
 

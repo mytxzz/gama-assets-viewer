@@ -19,7 +19,11 @@ drawRect = (drawNode, x, y, w, h, color)->
   table.insert(points, cc.p(x,y - h))
   drawNode\drawPolygon(points, 4, color, 0, color)
 
-create = (sceneDataPack) ->
+create = (sceneDataPack,csx) ->
+
+
+  console.dir csx
+  print("-------------------show_scene_scene.moon----------")
 
   print "[show_scene_scene::create] sceneDataPack:#{sceneDataPack}"
 

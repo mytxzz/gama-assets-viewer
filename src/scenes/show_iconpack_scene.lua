@@ -1,7 +1,9 @@
 require("gama")
 local scene = nil
 local create
-create = function(gamaIconPack)
+create = function(gamaIconPack, csx)
+  console.dir(csx)
+  print("-------------------show_iconpack_scene.moon----------")
   print("[show_iconpack_scene::create] gamaIconPack:" .. tostring(gamaIconPack))
   scene = cc.Scene:create()
   assert(gamaIconPack, "missing icon pack to play on.")

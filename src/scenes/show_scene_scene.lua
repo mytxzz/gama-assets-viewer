@@ -20,7 +20,9 @@ drawRect = function(drawNode, x, y, w, h, color)
   return drawNode:drawPolygon(points, 4, color, 0, color)
 end
 local create
-create = function(sceneDataPack)
+create = function(sceneDataPack, csx)
+  console.dir(csx)
+  print("-------------------show_scene_scene.moon----------")
   print("[show_scene_scene::create] sceneDataPack:" .. tostring(sceneDataPack))
   scene = cc.Scene:create()
   assert(sceneDataPack, "missing data instance to play on.")

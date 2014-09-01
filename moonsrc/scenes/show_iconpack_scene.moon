@@ -3,7 +3,12 @@ require "gama"
 
 scene = nil
 
-create = (gamaIconPack) ->
+create = (gamaIconPack,csx) ->
+
+
+
+  console.dir csx
+  print("-------------------show_iconpack_scene.moon----------")
 
   print "[show_iconpack_scene::create] gamaIconPack:#{gamaIconPack}"
 

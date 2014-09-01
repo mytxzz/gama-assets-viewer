@@ -3,7 +3,11 @@ view_helper = require "utils/view_helper"
 
 scene = nil
 
-create = (gamaTilemap) ->
+create = (gamaTilemap,csx) ->
+
+
+  console.dir csx
+  print("-------------------show_tilemap_scene.moon----------")
 
   print "[show_animation_scene::create] gamaTilemap:#{gamaTilemap}"
   scene = cc.Scene\create()

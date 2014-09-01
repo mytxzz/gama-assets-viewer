@@ -2,7 +2,11 @@
 
 scene = nil
 
-create = (gamaAnimation) ->
+create = (gamaAnimation,csx) ->
+
+
+  console.dir csx
+  print("-------------------show_animation_scene.moon----------")
 
   print "[show_animation_scene::create] gamaAnimation:#{gamaAnimation}"
 
