@@ -40,8 +40,8 @@ create = ->
     gama.readJSONAsync id, (err, csx)->
       return console.error "[enter_id_scene] readJSONAsync failed. error:#{err}" if err
 
-      --console.info "[enter_id_scene] csx:#{csx}"
-      --console.dir csx
+      console.info "[enter_id_scene] csx:#{csx}"
+      console.dir csx
 
       switch csx.type
 

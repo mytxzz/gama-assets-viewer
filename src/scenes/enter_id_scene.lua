@@ -9,6 +9,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
+  inputId:setText("5IbPnUH")
   inputId:setText("G3whKdI")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
@@ -17,7 +18,7 @@ create = function()
   btnView:setTouchEnabled(true)
   btnView:addTouchEventListener(function(widget, eventType)
     if not (eventType == ccui.TouchEventType.ended) then
-      return
+      return 
     end
     local id = inputId:getText()
     console.info("[enter_id_scene::click] id:" .. tostring(id))
@@ -25,6 +26,8 @@ create = function()
       if err then
         return console.error("[enter_id_scene] readJSONAsync failed. error:" .. tostring(err))
       end
+      console.info("[enter_id_scene] csx:" .. tostring(csx))
+      console.dir(csx)
       local _exp_0 = csx.type
       if "animations" == _exp_0 then
         gama.animation.getByCSX(csx, function(err, gamaAnimation)
@@ -36,7 +39,7 @@ create = function()
             gamaAnimation
           })
         end)
-        return
+        return 
       elseif "figures" == _exp_0 then
         gama.figure.getByCSX(csx, function(err, gamaFigure)
           if err then
@@ -47,7 +50,7 @@ create = function()
             gamaFigure
           })
         end)
-        return
+        return 
       elseif "tilemaps" == _exp_0 then
         gama.tilemap.getByCSX(csx, function(err, gamaTilemap)
           if err then
@@ -58,7 +61,7 @@ create = function()
             gamaTilemap
           })
         end)
-        return
+        return 
       elseif "scenes" == _exp_0 then
         return gama.scene.getByCSX(csx, function(err, sceneDataPack)
           console.info("[enter_id_scene::loadByCSX]")
