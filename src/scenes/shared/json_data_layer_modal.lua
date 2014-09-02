@@ -9,24 +9,22 @@ create = function(csx)
   container:setContentSize(display.width, display.height)
   local scrollView = ccui.ScrollView:create()
   scrollView:setTouchEnabled(true)
+  print("-----------" .. tostring(display.height - 40) .. "------------")
   scrollView:setContentSize(cc.size(display.width - 40, display.height - 40))
   scrollView:setPosition(cc.p(20, 20))
-  local csx1 = { }
-  csx1.pixelHeight = 1536
-  csx1.pixelWidth = 2048
-  csx1.scene_type = "wild"
-  csx1.type = "scenes"
-  csx1.width_in_brick = 64
-  print("-----json_data_layer-------------------")
-  print(inspect(csx))
+  local csxContent = inspect(csx)
+  console.log("csxContent len: " .. tostring(#csxContent))
+  local csxCut = tostring(csxContent:sub(0, 3000)) .. "\n......"
+  console.info("csxCut len: " .. tostring(#csxCut))
   local label1 = cc.Label:create()
-  label1:setDimensions(display.width - 40, 3500)
-  label1:setString(inspect(csx))
+  label1:setScale(1.5)
+  label1:setDimensions(display.width / 4 * 3 - 40, 1500)
+  label1:setString(csxCut)
   print("[json_data_layer_modal.moon:54] label1:" .. tostring(label1))
-  label1:setTextColor(cc.c4b(0, 255, 0, 255))
-  label1:setPosition(cc.p(0, 3500))
+  label1:setColor(cc.c3b(0, 255, 255))
+  label1:setPosition(cc.p(0, 1500))
   label1:setAnchorPoint(cc.p(0, 1))
-  scrollView:setInnerContainerSize(cc.size(display.width - 40, 3500))
+  scrollView:setInnerContainerSize(cc.size(display.width / 2 - 40, 1500))
   scrollView:addChild(label1)
   container:addChild(scrollView)
   local closeBtnFunc

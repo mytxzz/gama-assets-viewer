@@ -10,8 +10,8 @@ require "moonlight"
 main = ->
   collectgarbage "collect"
   -- avoid memory leak
-  collectgarbage "setpause", 200
-  collectgarbage "setstepmul", 8000
+  collectgarbage "setpause", 100
+  collectgarbage "setstepmul", 5000
 
   fileUtils\addSearchResolutionsOrder "src"
   fileUtils\addSearchResolutionsOrder "res/gama"
