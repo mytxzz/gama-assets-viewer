@@ -1,6 +1,7 @@
 
 require "gama"
 
+json_data_layer_modal = require "scenes.shared.json_data_layer_modal"
 scene = nil
 
 create = (gamaIconPack,csx) ->
@@ -41,6 +42,16 @@ create = (gamaIconPack,csx) ->
   line\drawSegment(cc.p(xpos1, 0), cc.p(xpos1, display.height), 0.5, borderColor)
   line\drawSegment(cc.p(xpos2, 0), cc.p(xpos2, display.height), 0.5, borderColor)
   scene\addChild line
+
+
+  --弹出json信息的按钮
+  infoBtnFunc = (btn,event)->
+    scene\addChild(json_data_layer_modal\create(csx)) if event == ccui.TouchEventType.ended
+    return
+  infoBtn = ccui.Button\create "btn_info.png"
+  infoBtn\setPosition(display.width - 50 , display.height - 50)
+  infoBtn\addTouchEventListener(infoBtnFunc)
+  scene\addChild(infoBtn)
 
   return scene
 

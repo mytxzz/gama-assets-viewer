@@ -1,7 +1,13 @@
 
 bit = require "bit"
 
-view_helper = require "utils/view_helper"
+view_helper = require "utils.view_helper"
+
+json_data_layer_modal = require "scenes.shared.json_data_layer_modal"
+
+inspect = require "inspect"
+
+
 
 scene = nil
 
@@ -22,8 +28,10 @@ drawRect = (drawNode, x, y, w, h, color)->
 create = (sceneDataPack,csx) ->
 
 
-  console.dir csx
+  -- console.dir csx
   print("-------------------show_scene_scene.moon----------")
+  print inspect(csx)
+  print("--------")
 
   print "[show_scene_scene::create] sceneDataPack:#{sceneDataPack}"
 
@@ -96,6 +104,16 @@ create = (sceneDataPack,csx) ->
   scene\addChild line
 
   scene\addChild label
+
+
+  --弹出json信息的按钮
+  infoBtnFunc = (btn,event)->
+    scene\addChild(json_data_layer_modal.create(csx),103) if event == ccui.TouchEventType.ended
+    return
+  infoBtn = ccui.Button\create "btn_info.png"
+  infoBtn\setPosition(display.width - 50 , display.height - 50)
+  infoBtn\addTouchEventListener(infoBtnFunc)
+  scene\addChild(infoBtn,102)
 
   return scene
 

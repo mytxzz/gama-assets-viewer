@@ -43,7 +43,8 @@ create = ->
       console.info "[enter_id_scene] csx:#{csx}"
       console.dir csx
       print("-------------------enter_id_scene.moon----------")
-      -- console.dir JSON.stringify 
+      -- print JSON.stringify(csx)
+      -- print("--------")
 
       switch csx.type
 
