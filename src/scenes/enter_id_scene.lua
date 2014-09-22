@@ -27,6 +27,7 @@ create = function()
       end
       console.info("[enter_id_scene] csx:" .. tostring(csx))
       console.dir(csx)
+      print("-------------------enter_id_scene.moon----------")
       local _exp_0 = csx.type
       if "animations" == _exp_0 then
         gama.animation.getByCSX(csx, function(err, gamaAnimation)
@@ -35,7 +36,8 @@ create = function()
           end
           console.info("[enter_id_scene::getAnimation] got animation for id:" .. tostring(id))
           display.enterScene("scenes.show_animation_scene", {
-            gamaAnimation
+            gamaAnimation,
+            csx
           })
         end)
         return 
@@ -46,7 +48,8 @@ create = function()
           end
           console.info("[enter_id_scene::getFigure] got figure for id:" .. tostring(id))
           display.enterScene("scenes.show_figure_scene", {
-            gamaFigure
+            gamaFigure,
+            csx
           })
         end)
         return 
@@ -57,7 +60,8 @@ create = function()
           end
           console.info("[enter_id_scene::getTilemap] got tilemap for id:" .. tostring(id))
           display.enterScene("scenes.show_tilemap_scene", {
-            gamaTilemap
+            gamaTilemap,
+            csx
           })
         end)
         return 
@@ -69,7 +73,8 @@ create = function()
           end
           console.info("[enter_id_scene::loadScene] load scene for id:" .. tostring(id))
           return display.enterScene("scenes.show_scene_scene", {
-            sceneDataPack
+            sceneDataPack,
+            csx
           })
         end)
       elseif "iconpacks" == _exp_0 then
@@ -80,7 +85,8 @@ create = function()
             return console.error("ERROR [enter_id_scene::loadScene] fail to load iconpack:" .. tostring(id) .. ". error:" .. tostring(err))
           end
           return display.enterScene("scenes.show_iconpack_scene", {
-            gamaIconPack
+            gamaIconPack,
+            csx
           })
         end)
       else

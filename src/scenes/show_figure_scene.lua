@@ -1,5 +1,6 @@
 local Character = require("models.character")
 local view_helper = require("utils/view_helper")
+local json_data_layer_modal = require("scenes.shared.json_data_layer_modal")
 local scene = nil
 local DIRECTION_TO_NEXT_CLOCKWISE = {
   n = "ne",
@@ -22,7 +23,9 @@ local DIRECTION_TO_NEXT_ANTICLOCKWISE = {
   ne = "n"
 }
 local create
-create = function(gamaFigure)
+create = function(gamaFigure, csx)
+  console.dir(csx)
+  print("-------------------show_figure_scene.moon----------")
   print("[show_animation_scene::create] gamaFigure:" .. tostring(gamaFigure))
   scene = cc.Scene:create()
   assert(gamaFigure, "missing figure instance to play on.")
@@ -78,6 +81,16 @@ create = function(gamaFigure)
   MainMenu:setContentSize(cc.size(100, (#motions + 1) * (LINE_SPACE)))
   MainMenu:setPosition(0, 0)
   scene:addChild(MainMenu)
+  local infoBtnFunc
+  infoBtnFunc = function(btn, event)
+    if event == ccui.TouchEventType.ended then
+      scene:addChild(json_data_layer_modal.create(csx), 103)
+    end
+  end
+  local infoBtn = ccui.Button:create("btn_info.png")
+  infoBtn:setPosition(display.width - 50, display.height - 50)
+  infoBtn:addTouchEventListener(infoBtnFunc)
+  scene:addChild(infoBtn, 102)
   return scene
 end
 return {

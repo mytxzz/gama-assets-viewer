@@ -1,9 +1,14 @@
 
 view_helper = require "utils/view_helper"
 
+json_data_layer_modal = require "scenes.shared.json_data_layer_modal"
 scene = nil
 
-create = (gamaTilemap) ->
+create = (gamaTilemap,csx) ->
+
+
+  console.dir csx
+  print("-------------------show_tilemap_scene.moon----------")
 
   print "[show_animation_scene::create] gamaTilemap:#{gamaTilemap}"
   scene = cc.Scene\create()
@@ -44,6 +49,16 @@ create = (gamaTilemap) ->
   layer\addChild line
 
   scene\addChild label
+
+
+  --弹出json信息的按钮
+  infoBtnFunc = (btn,event)->
+    scene\addChild(json_data_layer_modal.create(csx),103) if event == ccui.TouchEventType.ended
+    return
+  infoBtn = ccui.Button\create "btn_info.png"
+  infoBtn\setPosition(display.width - 50 , display.height - 50)
+  infoBtn\addTouchEventListener(infoBtnFunc)
+  scene\addChild(infoBtn,102)
 
   return scene
 

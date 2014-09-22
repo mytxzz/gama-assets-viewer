@@ -1,7 +1,10 @@
 require("gama")
+local json_data_layer_modal = require("scenes.shared.json_data_layer_modal")
 local scene = nil
 local create
-create = function(gamaIconPack)
+create = function(gamaIconPack, csx)
+  console.dir(csx)
+  print("-------------------show_iconpack_scene.moon----------")
   print("[show_iconpack_scene::create] gamaIconPack:" .. tostring(gamaIconPack))
   scene = cc.Scene:create()
   assert(gamaIconPack, "missing icon pack to play on.")
@@ -27,6 +30,16 @@ create = function(gamaIconPack)
   line:drawSegment(cc.p(xpos1, 0), cc.p(xpos1, display.height), 0.5, borderColor)
   line:drawSegment(cc.p(xpos2, 0), cc.p(xpos2, display.height), 0.5, borderColor)
   scene:addChild(line)
+  local infoBtnFunc
+  infoBtnFunc = function(btn, event)
+    if event == ccui.TouchEventType.ended then
+      scene:addChild(json_data_layer_modal:create(csx))
+    end
+  end
+  local infoBtn = ccui.Button:create("btn_info.png")
+  infoBtn:setPosition(display.width - 50, display.height - 50)
+  infoBtn:addTouchEventListener(infoBtnFunc)
+  scene:addChild(infoBtn)
   return scene
 end
 return {
