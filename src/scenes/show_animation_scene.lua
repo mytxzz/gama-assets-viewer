@@ -35,6 +35,16 @@ create = function(gamaAnimation, csx)
   infoBtn:setPosition(display.width - 50, display.height - 50)
   infoBtn:addTouchEventListener(infoBtnFunc)
   scene:addChild(infoBtn, 102)
+  local backBtnFunc
+  backBtnFunc = function(btn, event)
+    if event == ccui.TouchEventType.ended then
+      scene:addChild(json_data_layer_modal.create(csx), 103)
+    end
+  end
+  infoBtn = ccui.Button:create("btn_info.png")
+  infoBtn:setPosition(display.width - 50, display.height - 50)
+  infoBtn:addTouchEventListener(backBtnFunc)
+  scene:addChild(infoBtn, 102)
   return scene
 end
 return {

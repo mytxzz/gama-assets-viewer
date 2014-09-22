@@ -49,6 +49,15 @@ create = (gamaAnimation,csx) ->
   infoBtn\addTouchEventListener(infoBtnFunc)
   scene\addChild(infoBtn,102)
 
+  --返回输入素材框主页的按钮
+  backBtnFunc = (btn,event)->
+    scene\addChild(json_data_layer_modal.create(csx),103) if event == ccui.TouchEventType.ended
+    return
+  infoBtn = ccui.Button\create "btn_info.png"
+  infoBtn\setPosition(display.width - 50 , display.height - 50)
+  infoBtn\addTouchEventListener(backBtnFunc)
+  scene\addChild(infoBtn,102)
+
 
   return scene
 
