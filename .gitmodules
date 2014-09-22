@@ -19,3 +19,6 @@
 [submodule "src/vendor/vector.lua"]
 	path = src/vendor/vector.lua
 	url = git@github.com:GamaLabs/vector.lua.git
+[submodule "src/vender/inspect.lua"]
+	path = src/vender/inspect.lua
+	url = git@github.com:kikito/inspect.lua.git
