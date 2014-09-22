@@ -40,6 +40,15 @@ create = function(gamaIconPack, csx)
   infoBtn:setPosition(display.width - 50, display.height - 50)
   infoBtn:addTouchEventListener(infoBtnFunc)
   scene:addChild(infoBtn)
+  local backBtnFunc
+  backBtnFunc = function(btn, event)
+    console.error("[show_animation_scene.moon:55]:")
+    display.enterScene("scenes.enter_id_scene")
+  end
+  local backBtn = ccui.Button:create("btn_back.png")
+  backBtn:setPosition(50, display.height - 50)
+  backBtn:addTouchEventListener(backBtnFunc)
+  scene:addChild(backBtn, 102)
   return scene
 end
 return {
