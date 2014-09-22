@@ -111,6 +111,17 @@ create = (gamaFigure,csx) ->
   infoBtn\addTouchEventListener(infoBtnFunc)
   scene\addChild(infoBtn,102)
 
+  --返回输入素材框主页的按钮
+  backBtnFunc = (btn,event)->
+    -- scene\addChild(json_data_layer_modal.create(csx),103) if event == ccui.TouchEventType.ended
+    console.error "[show_animation_scene.moon:55]:"
+    display.enterScene "scenes.enter_id_scene"
+    return
+  backBtn = ccui.Button\create "btn_back.png"
+  backBtn\setPosition( 50 , display.height - 50)
+  backBtn\addTouchEventListener(backBtnFunc)
+  scene\addChild(backBtn,102)
+  
   return scene
 
 return {
