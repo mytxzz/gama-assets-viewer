@@ -1,12 +1,30 @@
 local json_data_layer_modal = require("scenes.shared.json_data_layer_modal")
 local scene = nil
+local drawRect
+drawRect = function(drawNode, x, y, w, h, color)
+  local points = { }
+  table.insert(points, cc.p(x, y))
+  table.insert(points, cc.p(x + w, y))
+  table.insert(points, cc.p(x + w, y - h))
+  table.insert(points, cc.p(x, y - h))
+  return drawNode:drawPolygon(points, 4, color, 0, color)
+end
+local createBackGradientLayer
+createBackGradientLayer = function()
+  local node = cc.LayerGradient:create()
+  node:setStartOpacity(255)
+  node:setEndOpacity(120)
+  node:setStartColor(cc.c3b(255, 0, 0))
+  node:setEndColor(cc.c3b(255, 0, 0))
+  return node
+end
 local create
 create = function(gamaAnimation, csx)
-  console.dir(csx)
   print("-------------------show_animation_scene.moon----------")
   print("[show_animation_scene::create] gamaAnimation:" .. tostring(gamaAnimation))
   scene = cc.Scene:create()
   assert(gamaAnimation, "missing animation userdata to play on.")
+  scene:addChild(createBackGradientLayer())
   local xpos1 = display.width / 4
   local xpos2 = display.width * 3 / 4
   local ypos = display.cy

@@ -1,4 +1,3 @@
-local bit = require("bit")
 local view_helper = require("utils.view_helper")
 local json_data_layer_modal = require("scenes.shared.json_data_layer_modal")
 local inspect = require("inspect")

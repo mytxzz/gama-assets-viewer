@@ -1,5 +1,4 @@
 
-bit = require "bit"
 
 view_helper = require "utils.view_helper"
 

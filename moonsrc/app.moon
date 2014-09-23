@@ -7,6 +7,9 @@ fileUtils\addSearchPath "res/gama"
 
 require "moonlight"
 
+-- bootstrap views
+require "scenes.init"
+
 main = ->
   collectgarbage "collect"
   -- avoid memory leak

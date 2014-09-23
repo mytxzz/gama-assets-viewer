@@ -4,12 +4,12 @@
 
 
 --[[
-require("enter_id_scene.lua")
-require("show_animation_scene.lua")
-require("show_figure_scene.lua")
-require("show_iconpack_scene.lua")
-require("show_scene_scene.lua")
-require("show_tilemap_scene.lua")
+require("scenes.enter_id_scene")
+require("scenes.show_animation_scene")
+require("scenes.show_figure_scene")
+require("scenes.show_iconpack_scene")
+require("scenes.show_scene_scene")
+require("scenes.show_tilemap_scene")
 
 ]]--
 
