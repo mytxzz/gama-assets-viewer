@@ -53,6 +53,16 @@ enum {
     kShaderType_3DPositionTex,
     kShaderType_3DSkinPositionTex,
     kShaderType_MAX,
+
+	//etc1 with alpha
+	kShaderType_PositionTextureColor_etc1_alpha,
+    kShaderType_PositionTextureColor_noMVP_etc1_alpha,
+    kShaderType_PositionTextureColorAlphaTest_etc1_alpha,
+    kShaderType_PositionTextureColorAlphaTestNoMV_etc1_alpha,
+	kShaderType_PositionTexture_etc1_alpha,
+    kShaderType_PositionTexture_uColor_etc1_alpha,
+    kShaderType_PositionTextureA8Color_etc1_alpha,
+	kShaderType_PositionLengthTexureColor_etc1_alpha,
 };
 
 static GLProgramCache *_sharedGLProgramCache = 0;
@@ -103,6 +113,7 @@ GLProgramCache::~GLProgramCache()
 
 bool GLProgramCache::init()
 {    
+	_define_etc1_alpha = "#define ETC1_ALPHA \n";
     loadDefaultGLPrograms();
     return true;
 }
@@ -204,6 +215,66 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
+
+	p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColor);
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, p ) );
+
+    // Position Texture Color without MVP shader
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP);
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, p ) );
+
+    // Position Texture Color alpha test
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTest);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST, p) );
+
+    // etc alpha
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColor_etc1_alpha);
+	_programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ETC1_ALPHA, p ) );
+
+	// Position Texture Color without MVP shader
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP_etc1_alpha);
+	_programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA, p ) );
+
+    // Position Texture Color alpha test
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTest_etc1_alpha);
+	_programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_ETC1_ALPHA, p) );
+
+    // Position Texture Color alpha test
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTestNoMV_etc1_alpha);
+	_programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV_ETC1_ALPHA, p) );
+	//
+    // Position Texture shader
+    //
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTexture_etc1_alpha);
+	_programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA, p) );
+
+    //
+    // Position, Texture attribs, 1 Color as uniform shader
+    //
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTexture_uColor_etc1_alpha);
+	_programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR_ETC1_ALPHA, p) );
+
+    //
+    // Position Texture A8 Color shader
+    //
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureA8Color_etc1_alpha);
+	_programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR_ETC1_ALPHA, p) );
+	//
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = new GLProgram();
+	loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor_etc1_alpha);
+	_programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR_ETC1_ALPHA, p) );
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -304,10 +375,56 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
+
+	//etc alpha
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ETC1_ALPHA);    
+    p->reset();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColor_etc1_alpha);
+
+    // Position Texture Color without MVP shader
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA);
+    p->reset();    
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP_etc1_alpha);
+
+    // Position Texture Color alpha test
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_ETC1_ALPHA);
+    p->reset();    
+	loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTest_etc1_alpha);
+    
+    // Position Texture Color alpha test
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV_ETC1_ALPHA);
+    p->reset();    
+    loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTestNoMV_etc1_alpha);
+
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA);
+    p->reset();
+	loadDefaultGLProgram(p, kShaderType_PositionTexture_etc1_alpha);
+    
+    //
+    // Position, Texture attribs, 1 Color as uniform shader
+    //
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR_ETC1_ALPHA);
+    p->reset();
+	loadDefaultGLProgram(p, kShaderType_PositionTexture_uColor_etc1_alpha);
+    
+    //
+    // Position Texture A8 Color shader
+    //
+	p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR_ETC1_ALPHA);
+    p->reset();
+	loadDefaultGLProgram(p, kShaderType_PositionTextureA8Color_etc1_alpha);
+    
+    //
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR_ETC1_ALPHA);
+    p->reset();
+	loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor_etc1_alpha);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
 {
+	
     switch (type) {
         case kShaderType_PositionTextureColor:
             p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
@@ -366,6 +483,42 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_3DSkinPositionTex:
             p->initWithByteArrays(cc3D_SkinPositionTex_vert, cc3D_ColorTex_frag);
             break;
+
+			//etc alpha
+		case kShaderType_PositionTextureColor_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
+            break;
+		case kShaderType_PositionTextureColor_noMVP_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
+            break;
+
+		case kShaderType_PositionTextureColorAlphaTest_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
+            break;
+		case kShaderType_PositionTextureColorAlphaTestNoMV_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
+            break;
+		case kShaderType_PositionTexture_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTexture_vert ,ccPositionTexture_frag);
+            break;
+		case kShaderType_PositionTexture_uColor_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
+            break;
+		case kShaderType_PositionTextureA8Color_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
+            break;
+		case kShaderType_PositionLengthTexureColor_etc1_alpha:
+			p->setDefineString(_define_etc1_alpha);
+            p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
+            break;
+
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;

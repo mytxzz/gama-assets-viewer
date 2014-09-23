@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "CCGL.h"
 #include "math/TransformUtils.h"
+#include "platform/CCImage.h"
 
 NS_CC_BEGIN
 // implementation of GridBase
@@ -103,7 +104,14 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
         ret = false;
     }
     
-    _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+	if(texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+	{
+		_shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA);
+	}
+	else
+	{
+		_shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+	}
     calculateVertexPoints();
 
     return ret;

@@ -32,7 +32,14 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 void main()
-{
-    gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);
+{\n
+	#ifndef ETC1_ALPHA\n
+		gl_FragColor = v_fragmentColor * texture2D(CC_Texture0, v_texCoord);\n
+	#else\n
+		vec2 tex = v_texCoord * vec2(1.0, 0.5);
+		vec4 v4Colour = texture2D(CC_Texture0, tex);\n
+		v4Colour.a = texture2D(CC_Texture0, vec2(v_texCoord.x,0.5) + v_texCoord * vec2(0.0, 0.5)).g;\n
+		gl_FragColor = v_fragmentColor * v4Colour;\n
+	#endif\n
 }
 );

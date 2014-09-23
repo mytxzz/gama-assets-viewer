@@ -90,6 +90,7 @@ public:
         TGA,
         //! Raw Data
         RAW_DATA,
+		ETC_ALPHA,
         //! Unknown format
         UNKOWN
     };

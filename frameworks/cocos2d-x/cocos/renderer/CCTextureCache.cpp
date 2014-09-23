@@ -342,6 +342,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
             CC_BREAK_IF(!bRet);
 
             texture = new Texture2D();
+			texture->setFileFormatType((int)image->getFileType());
 
             if( texture && texture->initWithImage(image) )
             {

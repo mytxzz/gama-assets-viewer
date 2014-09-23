@@ -75,6 +75,16 @@ const char* GLProgram::SHADER_3D_POSITION = "Shader3DPosition";
 const char* GLProgram::SHADER_3D_POSITION_TEXTURE = "Shader3DPositionTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTexture";
 
+//ect alpha 
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ETC1_ALPHA = "ShaderPositionTextureColorEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA = "ShaderPositionTextureColor_noMVPEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_ETC1_ALPHA = "ShaderPositionTextureColorAlphaTestEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV_ETC1_ALPHA = "ShaderPositionTextureColorAlphaTest_NoMVEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA = "ShaderPositionTextureEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR_ETC1_ALPHA = "ShaderPositionTexture_uColorEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR_ETC1_ALPHA = "ShaderPositionTextureA8ColorEtc1Alpha";
+const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR_ETC1_ALPHA = "ShaderPositionLengthTextureColorEtc1Alpha";
+
 
 // uniform names
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
@@ -132,6 +142,7 @@ GLProgram::GLProgram()
 , _fragShader(0)
 , _hashForUniforms(nullptr)
 , _flags()
+, _defineStr("")
 {
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
 }
@@ -261,6 +272,11 @@ bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArr
     return haveProgram;
 }
 #endif
+
+void GLProgram::setDefineString(const std::string& str)
+{
+	_defineStr = str.c_str();
+}
 
 bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
 {
@@ -424,6 +440,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         "uniform sampler2D CC_Texture2;\n"
         "uniform sampler2D CC_Texture3;\n"
         "//CC INCLUDES END\n\n",
+		_defineStr.c_str(),
         source,
     };
 

@@ -115,6 +115,8 @@ public:
         ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
         DEFAULT = AUTO,
+
+		ETC_ALPHA,
         
         NONE = -1
     };
@@ -347,6 +349,9 @@ public:
     
     void setGLProgram(GLProgram* program);
     GLProgram* getGLProgram() const;
+
+	void setFileFormatType(int type){_fileFormatType = type;}
+	int getFileFormatType(){return _fileFormatType;}
     
 public:
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
@@ -433,6 +438,8 @@ protected:
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
     bool _antialiasEnabled;
+
+	int _fileFormatType;
 };
 
 

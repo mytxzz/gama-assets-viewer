@@ -251,11 +251,18 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader state
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+		if(texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+		{
+			setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA));
+		}
+		else
+		{
+			setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+		}
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
-        setTextureRect(rect, rotated, rect.size);
+		setTextureRect(rect, rotated, rect.size);
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
@@ -365,9 +372,30 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
 {
     _rectRotated = rotated;
 
-    setContentSize(untrimmedSize);
-    setVertexRect(rect);
-    setTextureCoords(rect);
+    //setContentSize(untrimmedSize);
+    //setVertexRect(rect);
+	//setTextureCoords(rect);
+
+	if(_texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+	{
+		cocos2d::Rect tempRec = rect;
+		tempRec.setRect(rect.origin.x,rect.origin.y,rect.size.width,rect.size.height/2);
+
+		setContentSize(tempRec.size);
+		setVertexRect(tempRec);
+		setTextureCoords(rect);
+	}	
+	else
+	{
+		setContentSize(untrimmedSize);
+		setVertexRect(rect);
+		setTextureCoords(rect);
+	}
+
+	/*setContentSize(untrimmedSize);
+	setVertexRect(rect);
+	setTextureCoords(rect);*/
+	
 
     Vec2 relativeOffset = _unflippedOffsetPositionFromCenter;
 

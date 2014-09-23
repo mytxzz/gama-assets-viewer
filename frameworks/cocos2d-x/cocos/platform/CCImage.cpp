@@ -497,6 +497,17 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
 
         _fileType = detectFormat(unpackedData, unpackedLen);
 
+		if(_fileType == Format::ETC)
+		{
+			int start = _filePath.find_last_of('_')+1;
+			int len = _filePath.find_last_of('.') - start;
+			std::string name = _filePath.substr(start,len);
+			if(name == "alpha")
+			{
+				_fileType = Format::ETC_ALPHA;
+			}
+		}
+
         switch (_fileType)
         {
         case Format::PNG:
@@ -517,6 +528,9 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         case Format::ETC:
             ret = initWithETCData(unpackedData, unpackedLen);
             break;
+		case Format::ETC_ALPHA:
+            ret = initWithETCData(unpackedData, unpackedLen);
+			break;
         case Format::S3TC:
             ret = initWithS3TCData(unpackedData, unpackedLen);
             break;

@@ -101,7 +101,14 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     this->tileToNodeTransform();
 
     // shader, and other stuff
-    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+	if(_texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+	{
+		setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_ETC1_ALPHA));
+	}
+	else
+	{
+		setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+	}
     
     _useAutomaticVertexZ = false;
     _vertexZvalue = 0;
@@ -702,8 +709,9 @@ void TMXLayer::parseInternalProperties()
         _useAutomaticVertexZ = true;
         auto alphaFuncVal = getProperty("cc_alpha_func");
         float alphaFuncValue = alphaFuncVal.asFloat();
-        setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
-        
+		
+		setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
+
         GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
         
         // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison

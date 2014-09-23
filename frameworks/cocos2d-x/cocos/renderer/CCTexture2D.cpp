@@ -437,6 +437,7 @@ Texture2D::Texture2D()
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
+, _fileFormatType(-1)
 {
 }
 
@@ -685,8 +686,15 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    // shader
-    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+	if(_fileFormatType == (int)Image::Format::ETC_ALPHA)
+	{
+		setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA));
+	}
+	else
+	{
+		// shader
+		setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+	}
     return true;
 }
 

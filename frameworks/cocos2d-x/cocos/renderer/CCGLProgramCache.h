@@ -95,6 +95,8 @@ private:
 
 //    Dictionary* _programs;
     std::unordered_map<std::string, GLProgram*> _programs;
+
+	std::string _define_etc1_alpha;
 };
 
 // end of shaders group

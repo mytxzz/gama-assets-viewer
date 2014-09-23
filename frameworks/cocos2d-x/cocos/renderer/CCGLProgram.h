@@ -128,6 +128,16 @@ public:
 
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
+
+	//etc1 alpha
+	static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_ETC1_ALPHA ;
+	static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_TEXTURE_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR_ETC1_ALPHA;
+	static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR_ETC1_ALPHA;
     
     //3D
     static const char* SHADER_3D_POSITION;
@@ -299,6 +309,8 @@ public:
     // reload all shaders, this function is designed for android
     // when opengl context lost, so don't call it.
     void reset();
+
+	void setDefineString(const std::string& str);
     
     inline const GLuint getProgram() const { return _program; }
 
@@ -327,6 +339,8 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     struct _hashUniformEntry* _hashForUniforms;
 	bool              _hasShaderCompiler;
+	
+	std::string		  _defineStr;
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     std::string       _shaderId;

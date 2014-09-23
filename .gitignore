@@ -20,3 +20,5 @@ frameworks/cocos2d-x/cocos/platform/android/java
 frameworks/runtime-src/proj.android/
 runtime/android/
 res/assets/
+frameworks/cocos2d-x/tests/
+
