@@ -1,6 +1,7 @@
 debug.log
 *.swp
 **/build/
+**/Debug.win32/
 runtime/mac/
 log/
 runtime/ios/
