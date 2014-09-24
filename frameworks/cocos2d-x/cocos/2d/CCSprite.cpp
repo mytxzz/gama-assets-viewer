@@ -250,19 +250,20 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
 
-  //      // shader state
-		//if(texture && texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
-		//{
-		//	setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA));
-		//}
-		//else
-		//{
-		//	setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-		//}
+        //  shader state
+        if(texture && texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+        {
+          CCLOG("[Sprite::initWithTexture] detect Format::ETC_ALPHA use GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA");
+          setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA));
+        }
+        else
+        {
+          setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        }
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
-		setTextureRect(rect, rotated, rect.size);
+        setTextureRect(rect, rotated, rect.size);
 
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
