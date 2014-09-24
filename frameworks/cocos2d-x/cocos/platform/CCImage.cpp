@@ -497,6 +497,16 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
 
         _fileType = detectFormat(unpackedData, unpackedLen);
 
+        if(_fileType == Format::ETC)
+        {
+          if(this->getWidth() * 2 == this->getHeight())
+          {
+            // if etc1 texture has twice height then width then we consider the texture contains alpha mask
+            CCLOG("[CCImage] FOUND Format::ETC_ALPHA");
+            _fileType = Format::ETC_ALPHA;
+          }
+        }
+
         switch (_fileType)
         {
         case Format::PNG:
@@ -517,9 +527,9 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         case Format::ETC:
             ret = initWithETCData(unpackedData, unpackedLen);
             break;
-        case Format::ETC_ALPHA:
+		case Format::ETC_ALPHA:
             ret = initWithETCData(unpackedData, unpackedLen);
-            break;
+			break;
         case Format::S3TC:
             ret = initWithS3TCData(unpackedData, unpackedLen);
             break;
@@ -543,21 +553,6 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
                 free(tgaData);
                 break;
             }
-        }
-
-        if(_fileType == Format::ETC)
-        {
-          /*int start = _filePath.find_last_of('_')+1;
-            int len = _filePath.find_last_of('.') - start;
-            std::string name = _filePath.substr(start,len);
-            if(name == "alpha")
-            {
-            _fileType = Format::ETC_ALPHA;
-            }*/
-          if(this->getWidth() * 2 == this->getHeight())
-          {
-            _fileType = Format::ETC_ALPHA;
-          }
         }
 
         if(unpackedData != data)
