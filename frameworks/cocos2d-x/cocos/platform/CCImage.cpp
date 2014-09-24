@@ -497,15 +497,15 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
 
         _fileType = detectFormat(unpackedData, unpackedLen);
 
-        if(_fileType == Format::ETC)
-        {
-          if(this->getWidth() * 2 == this->getHeight())
-          {
-            // if etc1 texture has twice height then width then we consider the texture contains alpha mask
-            CCLOG("[CCImage] FOUND Format::ETC_ALPHA");
-            _fileType = Format::ETC_ALPHA;
-          }
-        }
+        //if(_fileType == Format::ETC)
+        //{
+          //if(this->getWidth() * 2 == this->getHeight())
+          //{
+            //// if etc1 texture has twice height then width then we consider the texture contains alpha mask
+            //CCLOG("[CCImage] FOUND Format::ETC_ALPHA");
+            //_fileType = Format::ETC_ALPHA;
+          //}
+        //}
 
         switch (_fileType)
         {

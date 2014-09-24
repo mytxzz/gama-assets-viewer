@@ -124,13 +124,13 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    
+
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
     CCASSERT(frame != nullptr, msg);
 #endif
-    
+
     return createWithSpriteFrame(frame);
 }
 
@@ -225,31 +225,31 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     if (Node::init())
     {
         _batchNode = nullptr;
-        
+
         _recursiveDirty = false;
         setDirty(false);
-        
+
         _opacityModifyRGB = true;
-        
+
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        
+
         _flippedX = _flippedY = false;
-        
+
         // default transform anchor: center
         setAnchorPoint(Vec2(0.5f, 0.5f));
-        
+
         // zwoptex default values
         _offsetPosition = Vec2::ZERO;
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
-        
+
         // Atlas: Color
         _quad.bl.colors = Color4B::WHITE;
         _quad.br.colors = Color4B::WHITE;
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
-        
+
   //      // shader state
 		//if(texture && texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
 		//{
@@ -263,7 +263,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         // update texture (calls updateBlendFunc)
         setTexture(texture);
 		setTextureRect(rect, rotated, rect.size);
-        
+
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
@@ -325,10 +325,13 @@ void Sprite::setTexture(const std::string &filename)
 }
 
 void Sprite::setTexture(Texture2D *texture)
-{	
+{
+
+  //CCLOG("[Sprite::setTexture] current: %d, Image::Format::ETC_ALPHA is  %d", texture ? (int)texture->getFileFormatType() : 999, (int)(Image::Format::ETC_ALPHA));
 	// shader state
 	if(texture && texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
 	{
+    CCLOG("[Sprite::setTexture] detect Format::ETC_ALPHA use GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA");
 		setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP_ETC1_ALPHA));
 	}
 	else
@@ -340,7 +343,7 @@ void Sprite::setTexture(Texture2D *texture)
     CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-	
+
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
@@ -386,26 +389,27 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     //setVertexRect(rect);
 	//setTextureCoords(rect);
 
-	if(_texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
-	{
-		cocos2d::Rect tempRec = rect;
-		tempRec.setRect(rect.origin.x,rect.origin.y,rect.size.width,rect.size.height/2);
+	//if(_texture->getFileFormatType() == (int)(Image::Format::ETC_ALPHA))
+	//{
+    //CCLOG("[Sprite::setTextureRect] detect Format::ETC_ALPHA");
+		//cocos2d::Rect tempRec = rect;
+		//tempRec.setRect(rect.origin.x,rect.origin.y,rect.size.width,rect.size.height/2);
 
-		setContentSize(tempRec.size);
-		setVertexRect(tempRec);
-		setTextureCoords(rect);
-	}	
-	else
-	{
+		//setContentSize(tempRec.size);
+		//setVertexRect(tempRec);
+		//setTextureCoords(rect);
+	//}
+	//else
+	//{
 		setContentSize(untrimmedSize);
 		setVertexRect(rect);
 		setTextureCoords(rect);
-	}
+	//}
 
 	/*setContentSize(untrimmedSize);
 	setVertexRect(rect);
 	setTextureCoords(rect);*/
-	
+
 
     Vec2 relativeOffset = _unflippedOffsetPositionFromCenter;
 
@@ -431,7 +435,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     else
     {
         // self rendering
-        
+
         // Atlas: Vertex
         float x1 = 0 + _offsetPosition.x;
         float y1 = 0 + _offsetPosition.y;
@@ -655,7 +659,7 @@ void Sprite::drawDebugData()
         Vec2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
-    
+
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldModelView);
 }
 #endif //CC_SPRITE_DEBUG_DRAW
@@ -685,7 +689,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::addChild(Node *child, int zOrder, const std::string &name)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
-    
+
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -693,7 +697,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
         CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
-        
+
         if (!_reorderChildDirty)
         {
             setReorderChildDirtyRecursively();
@@ -818,7 +822,7 @@ void Sprite::setPosition(float x, float y)
 void Sprite::setRotation(float rotation)
 {
     Node::setRotation(rotation);
-    
+
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -929,7 +933,7 @@ bool Sprite::isFlippedY(void) const
 void Sprite::updateColor(void)
 {
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    
+
     // special opacity for premultiplied textures
 	if (_opacityModifyRGB)
     {
