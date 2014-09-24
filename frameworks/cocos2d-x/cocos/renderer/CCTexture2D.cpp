@@ -734,13 +734,15 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     int imageHeight = image->getHeight();
 
     //CCLOG("[Texture2D::initWithImage] imageWidth: %d, imageHeight: %d", imageWidth, imageHeight);
-    if(image->getFileType() == Image::Format::ETC)
-    {
-      if(imageWidth * 2 == imageHeight)
-      {
-        _fileFormatType = (int)Image::Format::ETC_ALPHA;
-      }
-    }
+    //if(image->getFileType() == Image::Format::ETC)
+    //{
+      //if(imageWidth * 2 == imageHeight)
+      //{
+        //_fileFormatType = (int)Image::Format::ETC_ALPHA;
+      //}
+    //}
+
+    _fileFormatType = (int)image->getFileType();
 
     Configuration *conf = Configuration::getInstance();
 
