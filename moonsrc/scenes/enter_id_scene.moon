@@ -18,7 +18,7 @@ create = ->
 
   inputId = cc.EditBox\create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId\setPosition(cc.p(display.cx, display.cy + 100))
-  -- inputId\setText "8DP12iG" -- animation
+  inputId\setText "8DP12iG" -- animation
   -- inputId\setText "5IbPnUH" -- figure
   --inputId\setText "8Lowbeq" -- figure
   --inputId\setText "G3whKdI" -- figure
@@ -28,7 +28,11 @@ create = ->
   -- inputId\setText "G3whKdI" -- figure
   -- inputId\setText "IT6Jdkm" -- iconpack
   -- inputId\setText "3hLQqBp" -- tilemap
+<<<<<<< HEAD
   -- inputId\setText "EH8H2qZ" -- scene
+=======
+  --inputId\setText "EH8H2qZ" -- scene
+>>>>>>> 3ff2d496ed3703c863211443f4d5799bae7f2e22
   --inputId\setText "56PIcLn" -- scene
   inputId\setText "6qU6lS4" -- scene
   scene\addChild inputId

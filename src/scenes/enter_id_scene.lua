@@ -10,7 +10,10 @@ create = function()
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
   inputId:setText("8DP12iG")
+<<<<<<< HEAD
   inputId:setText("6qU6lS4")
+=======
+>>>>>>> 3ff2d496ed3703c863211443f4d5799bae7f2e22
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")

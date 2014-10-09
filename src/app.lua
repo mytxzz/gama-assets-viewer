@@ -4,6 +4,7 @@ local fileUtils = cc.FileUtils:getInstance()
 fileUtils:addSearchPath("src/")
 fileUtils:addSearchPath("res/gama")
 require("moonlight")
+require("scenes.init")
 local main
 main = function()
   collectgarbage("collect")

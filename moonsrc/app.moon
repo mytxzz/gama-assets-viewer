@@ -7,8 +7,13 @@ fileUtils\addSearchPath "res/gama"
 
 require "moonlight"
 
+<<<<<<< HEAD
 --gama = require "gama"
 --gama.setTextureFormat gama.TEXTURE_TYPE_WEBP    -- use webp texture
+=======
+-- bootstrap views
+require "scenes.init"
+>>>>>>> 3ff2d496ed3703c863211443f4d5799bae7f2e22
 
 main = ->
   collectgarbage "collect"
