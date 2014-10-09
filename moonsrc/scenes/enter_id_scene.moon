@@ -22,14 +22,15 @@ create = ->
   -- inputId\setText "5IbPnUH" -- figure
   --inputId\setText "8Lowbeq" -- figure
   --inputId\setText "G3whKdI" -- figure
-  -- inputId\setText "8DP12iG" -- animation
+  --inputId\setText "8DP12iG" -- animation
   -- inputId\setText "5IbPnUH" -- figure
   -- inputId\setText "8Lowbeq" -- figure
   -- inputId\setText "G3whKdI" -- figure
   -- inputId\setText "IT6Jdkm" -- iconpack
   -- inputId\setText "3hLQqBp" -- tilemap
-  inputId\setText "EH8H2qZ" -- scene
+  -- inputId\setText "EH8H2qZ" -- scene
   --inputId\setText "56PIcLn" -- scene
+  inputId\setText "6qU6lS4" -- scene
   scene\addChild inputId
 
   btnView = ccui.Button\create!

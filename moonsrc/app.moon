@@ -7,6 +7,9 @@ fileUtils\addSearchPath "res/gama"
 
 require "moonlight"
 
+--gama = require "gama"
+--gama.setTextureFormat gama.TEXTURE_TYPE_WEBP    -- use webp texture
+
 main = ->
   collectgarbage "collect"
   -- avoid memory leak
