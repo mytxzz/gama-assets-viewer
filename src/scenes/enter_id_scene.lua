@@ -1,4 +1,5 @@
 local gama = require("gama")
+gama.setTextureFormat(gama.TEXTURE_TYPE_WEBP)
 local scene = nil
 local create
 create = function()
@@ -9,8 +10,7 @@ create = function()
   scene:addChild(label)
   local inputId = cc.EditBox:create(cc.size(400, 96), display.newScale9Sprite("EditBoxBg.png"))
   inputId:setPosition(cc.p(display.cx, display.cy + 100))
-  inputId:setText("8DP12iG")
-  inputId:setText("6qU6lS4")
+  inputId:setText("IoOQu2b")
   scene:addChild(inputId)
   local btnView = ccui.Button:create()
   btnView:loadTextures("btn_view_normal.png", "btn_view_push.png", "btn_view_push.png")

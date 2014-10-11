@@ -98,7 +98,7 @@ create = (gamaFigure,csx) ->
     MainMenu\addChild(testMenuItem, index + 10000, index + 10000)
 
   MainMenu\setContentSize(cc.size(100, (#motions + 1) * (LINE_SPACE)))
-  MainMenu\setPosition(0, 0)
+  MainMenu\setPosition(20, -50)
   scene\addChild(MainMenu)
 
 
@@ -121,7 +121,7 @@ create = (gamaFigure,csx) ->
   backBtn\setPosition( 50 , display.height - 50)
   backBtn\addTouchEventListener(backBtnFunc)
   scene\addChild(backBtn,102)
-  
+
   return scene
 
 return {

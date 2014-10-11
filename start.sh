@@ -35,6 +35,9 @@ else
   rm -rf "$MAC_APP_PATH/Contents/Resources/gama"
   ln -s ../../../../../gama "$MAC_APP_PATH/Contents/Resources/gama"
 
+  rm -rf "$MAC_APP_PATH/Contents/Resources/gama_webp"
+  ln -s ../../../../../gama_webp "$MAC_APP_PATH/Contents/Resources/gama_webp"
+
   echo "" > "$MAC_APP_PATH/Contents/Resources/Deprecated.lua"
   echo "" > "$MAC_APP_PATH/Contents/Resources/DeprecatedClass.lua"
 

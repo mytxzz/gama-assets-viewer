@@ -79,7 +79,7 @@ create = function(gamaFigure, csx)
     MainMenu:addChild(testMenuItem, index + 10000, index + 10000)
   end
   MainMenu:setContentSize(cc.size(100, (#motions + 1) * (LINE_SPACE)))
-  MainMenu:setPosition(0, 0)
+  MainMenu:setPosition(20, -50)
   scene:addChild(MainMenu)
   local infoBtnFunc
   infoBtnFunc = function(btn, event)
